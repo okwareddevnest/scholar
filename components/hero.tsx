@@ -25,7 +25,7 @@ export default function Hero() {
           From essays to dissertations, math problems to coding challenges - we&apos;re your all-in-one academic support system. Let our expert tutors guide you towards academic excellence.
         </p>
         <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700">
-          <Link href="#contact">Start Excelling Today</Link>
+          <Link href="#contact" className="text-white">Start Excelling Today</Link>
         </Button>
       </div>
     </section>

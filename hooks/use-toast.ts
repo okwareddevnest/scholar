@@ -9,9 +9,6 @@ const TOAST_REMOVE_DELAY = 1000000;
 
 type ToasterToast = ToastProps & {
   id: string;
-  title?: React.ReactNode;
-  description?: React.ReactNode;
-  action?: typeof ToastActionElement;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 };
@@ -143,48 +140,16 @@ type Toast = Omit<ToasterToast, "id">;
 export function toast({ ...props }: Toast) {
   const id = genId();
 
-  const update = (props: ToasterToast) =>
-    dispatch({
-      type: "UPDATE_TOAST",
-      toast: { ...props, id },
-    });
-  const dismiss = () => dispatch({ type: "DISMISS_TOAST", toastId: id });
-
-  dispatch({
-    type: "ADD_TOAST",
-    toast: {
-      ...props,
-      id,
-      open: true,
-      onOpenChange: (open: boolean) => {
-        if (!open) dismiss();
-      },
-    },
-  });
-
-  return {
-    id: id,
-    dismiss,
-    update,
-  };
-}
-
-export function useToast() {
-  const [state, setState] = React.useState(memoryState);
-
-  React.useEffect(() => {
-    listeners.push(setState);
-    return () => {
-      const index = listeners.indexOf(setState);
-      if (index > -1) {
-        listeners.splice(index, 1);
-      }
-    };
-  }, []);
-
-  return {
-    ...state,
-    toast,
-    dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
-  };
-}
+  const toast: ToasterToast = {
+    id,
+    ...props,
+        type: props.type || "default",
+      };
+    
+      dispatch({
+        type: actionTypes.ADD_TOAST,
+        toast,
+      });
+    
+      return id;
+    }

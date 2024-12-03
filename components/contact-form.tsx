@@ -18,6 +18,9 @@ export default function ContactForm() {
     toast({
       title: "Form submitted!",
       description: "We'll get back to you soon.",
+      message: "Form submitted!",
+      type: "success",
+      onDismiss: () => console.log("Toast dismissed"),
     });
   };
 

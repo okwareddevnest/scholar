@@ -1,10 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const testimonials = [
   {
     name: "Sarah J.",
-    avatar: "SJ",
     text: "The quality of the research paper I received was outstanding. It greatly helped me in my studies and improved my understanding of the subject.",
     university: "Harvard University",
     country: "USA",
@@ -12,7 +10,6 @@ const testimonials = [
   },
   {
     name: "Michael T.",
-    avatar: "MT",
     text: "I was impressed by the depth of knowledge and the timely delivery. The tutor&apos;s expertise in statistics was evident, and it significantly boosted my project&apos;s quality.",
     university: "University of Toronto",
     country: "Canada",
@@ -20,7 +17,6 @@ const testimonials = [
   },
   {
     name: "Emily R.",
-    avatar: "ER",
     text: "The editing service transformed my dissertation. The attention to detail was remarkable, and it helped me refine my arguments effectively.",
     university: "University of Oxford",
     country: "UK",
@@ -28,7 +24,6 @@ const testimonials = [
   },
   {
     name: "David L.",
-    avatar: "DL",
     text: "ScholarStream&apos;s assistance with my complex engineering assignments was invaluable. Their explanations were clear and helped me grasp difficult concepts.",
     university: "Massachusetts Institute of Technology",
     country: "USA",
@@ -36,7 +31,6 @@ const testimonials = [
   },
   {
     name: "Sophia C.",
-    avatar: "SC",
     text: "The literature review support I received was exceptional. It helped me structure my research effectively and identify key areas for further investigation.",
     university: "University of Melbourne",
     country: "Australia",
@@ -44,7 +38,6 @@ const testimonials = [
   },
   {
     name: "James W.",
-    avatar: "JW",
     text: "As an international student, I found ScholarStream&apos;s language support incredibly helpful. It improved my academic writing skills significantly.",
     university: "University of British Columbia",
     country: "Canada",
@@ -61,15 +54,10 @@ export default function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <Card key={index} className="flex flex-col h-full">
               <CardHeader>
-                <div className="flex items-center space-x-4">
-                  <Avatar>
-                    <AvatarFallback>{testimonial.avatar}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <CardTitle className="text-lg">{testimonial.name}</CardTitle>
-                    <p className="text-sm text-gray-500">{testimonial.level}</p>
-                    <p className="text-sm text-gray-500">{testimonial.university}, {testimonial.country}</p>
-                  </div>
+                <div className="space-y-1">
+                  <CardTitle className="text-lg">{testimonial.name}</CardTitle>
+                  <p className="text-sm text-gray-500">{testimonial.level}</p>
+                  <p className="text-sm text-gray-500">{testimonial.university}, {testimonial.country}</p>
                 </div>
               </CardHeader>
               <CardContent className="flex-grow">

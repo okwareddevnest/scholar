@@ -13,10 +13,10 @@ const testimonials = [
   {
     name: "Michael T.",
     avatar: "MT",
-    text: "I was impressed by the depth of knowledge and the timely delivery. The tutor's expertise in statistics was evident, and it significantly boosted my project's quality.",
+    text: "I was impressed by the depth of knowledge and the timely delivery. The tutor&apos;s expertise in statistics was evident, and it significantly boosted my project&apos;s quality.",
     university: "University of Toronto",
     country: "Canada",
-    level: "Master's Student"
+    level: "Master&apos;s Student"
   },
   {
     name: "Emily R.",
@@ -29,7 +29,7 @@ const testimonials = [
   {
     name: "David L.",
     avatar: "DL",
-    text: "ScholarStream's assistance with my complex engineering assignments was invaluable. Their explanations were clear and helped me grasp difficult concepts.",
+    text: "ScholarStream&apos;s assistance with my complex engineering assignments was invaluable. Their explanations were clear and helped me grasp difficult concepts.",
     university: "Massachusetts Institute of Technology",
     country: "USA",
     level: "Undergraduate"
@@ -45,10 +45,10 @@ const testimonials = [
   {
     name: "James W.",
     avatar: "JW",
-    text: "As an international student, I found ScholarStream's language support incredibly helpful. It improved my academic writing skills significantly.",
+    text: "As an international student, I found ScholarStream&apos;s language support incredibly helpful. It improved my academic writing skills significantly.",
     university: "University of British Columbia",
     country: "Canada",
-    level: "Master's Student"
+    level: "Master&apos;s Student"
   }
 ];
 

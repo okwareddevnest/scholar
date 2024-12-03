@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const testimonials = [
   {
@@ -50,7 +50,7 @@ const testimonials = [
     country: "Canada",
     level: "Master's Student"
   }
-]
+];
 
 export default function Testimonials() {
   return (
@@ -73,13 +73,12 @@ export default function Testimonials() {
                 </div>
               </CardHeader>
               <CardContent className="flex-grow">
-                <p className="text-gray-600 italic">"{testimonial.text}"</p>
+                <p className="text-gray-600 italic">&quot;{testimonial.text}&quot;</p>
               </CardContent>
             </Card>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }
-

@@ -1,5 +1,6 @@
 import Navbar from '../components/navbar'; // Import the Navbar component
 import Hero from '../components/hero'; // Adjusted path
+import About from '../components/about'; // Adjusted path
 import Services from '../components/services'; // Adjusted path
 import Solutions from '../components/solutions'; // Corrected path
 import Features from '../components/features'; // Adjusted path

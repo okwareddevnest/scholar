@@ -2,7 +2,7 @@ import React from 'react';
 
 const About: React.FC = () => {
   return (
-    <section id="about" className="relative h-screen py-20 bg-gray-50">
+    <section id="about" className="relative py-20 bg-gray-50">
       <div className="container mx-auto px-4 relative z-10 flex flex-wrap justify-between">
         <div className="max-w-3xl text-left bg-white p-8 rounded-lg shadow-lg mb-6">
           <h2 className="text-4xl font-bold mb-6 text-blue-600">About ScholarStream</h2>

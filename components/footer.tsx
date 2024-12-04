@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
             {/* Social Media Icons */}
             <div className="flex space-x-6">
               <Link
-                href="https://facebook.com/homeworkhelper"
+                href="https://www.facebook.com/discounthomeworkhelper"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow us on Facebook"
@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
                 <Facebook className="w-6 h-6 text-[#1877F2]" />
               </Link>
               <Link
-                href="https://instagram.com/homeworkhelper"
+                href="https://www.instagram.com/discounthomeworkhelper"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow us on Instagram"
@@ -56,10 +56,10 @@ const Footer: React.FC = () => {
                 <Instagram className="w-6 h-6 text-[#E4405F]" />
               </Link>
               <Link
-                href="https://x.com/homeworkhelper"
+                href="https://x.com/HomeworkHelp786?t=cXt4j7VJL3kK7VIP-cG2Cw&s=09"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Follow us on X"
+                aria-label="Follow us on Twitter"
               >
                 <Twitter className="w-6 h-6 text-[#1DA1F2]" />
               </Link>

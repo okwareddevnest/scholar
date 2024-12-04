@@ -15,6 +15,7 @@ const Home: React.FC = () => {
       <Navbar /> {/* Include the Navbar at the top of the page */}
       <main className="flex-grow">
         <Hero />
+        <About /> {/* Add the About component here */}
         <Services />
         <Solutions /> {/* Include the Solutions component */}
         <Features />

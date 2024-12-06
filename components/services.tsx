@@ -84,9 +84,9 @@ export default function Services() {
   }, []);
 
   return (
-    <section id="services" className="py-20 bg-gray-50 overflow-hidden" aria-labelledby="services-title">
+    <section id="services" className="py-20 bg-purple-50 overflow-hidden" aria-labelledby="services-title">
       <div className="container mx-auto px-4">
-        <h2 id="services-title" className="text-3xl font-bold text-center mb-12">Our Services</h2>
+        <h2 id="services-title" className="text-3xl font-bold text-center mb-12 text-purple-800">Our Services</h2>
         <div className="relative">
           <div 
             ref={scrollRef}
@@ -98,42 +98,42 @@ export default function Services() {
           >
             <div className="flex space-x-4 animate-scroll">
               {services.map((service, index) => (
-                <Card key={index} className="flex-shrink-0 w-[300px] relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-gray-100">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                <Card key={index} className="flex-shrink-0 w-[300px] relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-blue-500"></div>
                   <CardHeader className="space-y-1">
                     <div className="flex items-center justify-between">
-                      <service.icon className="h-8 w-8 text-blue-500" aria-hidden="true" />
+                      <service.icon className="h-8 w-8 text-purple-500" aria-hidden="true" />
                       {service.badge && (
                         <Badge variant="secondary" className="bg-purple-100 text-purple-800">
                           {service.badge}
                         </Badge>
                       )}
                     </div>
-                    <CardTitle className="text-xl font-bold">{service.title}</CardTitle>
+                    <CardTitle className="text-xl font-bold text-purple-800">{service.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-sm">{service.description}</CardDescription>
+                    <CardDescription className="text-sm text-gray-700">{service.description}</CardDescription>
                   </CardContent>
                 </Card>
               ))}
             </div>
             <div className="flex space-x-4 animate-scroll" aria-hidden="true">
               {services.map((service, index) => (
-                <Card key={index} className="flex-shrink-0 w-[300px] relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-gray-100">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                <Card key={index} className="flex-shrink-0 w-[300px] relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-blue-500"></div>
                   <CardHeader className="space-y-1">
                     <div className="flex items-center justify-between">
-                      <service.icon className="h-8 w-8 text-blue-500" aria-hidden="true" />
+                      <service.icon className="h-8 w-8 text-purple-500" aria-hidden="true" />
                       {service.badge && (
                         <Badge variant="secondary" className="bg-purple-100 text-purple-800">
                           {service.badge}
                         </Badge>
                       )}
                     </div>
-                    <CardTitle className="text-xl font-bold">{service.title}</CardTitle>
+                    <CardTitle className="text-xl font-bold text-purple-800">{service.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-sm">{service.description}</CardDescription>
+                    <CardDescription className="text-sm text-gray-700">{service.description}</CardDescription>
                   </CardContent>
                 </Card>
               ))}

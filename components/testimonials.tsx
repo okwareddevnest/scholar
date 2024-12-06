@@ -8,7 +8,7 @@ const testimonials = [
   {
     name: "Sarah J.",
     avatar: "/avatars/sarah.jpg",
-    text: "ScholarStream&apos;s research paper assistance was outstanding. It greatly improved my understanding of the subject.",
+    text: "ScholarStream's research paper assistance was outstanding. It greatly improved my understanding of the subject.",
     university: "Harvard University",
     country: "USA",
     level: "Ph.D. Candidate"
@@ -16,15 +16,15 @@ const testimonials = [
   {
     name: "Michael T.",
     avatar: "/avatars/michael.jpg",
-    text: "The depth of knowledge and timely delivery impressed me. Their expertise in statistics significantly boosted my project&apos;s quality.",
+    text: "The depth of knowledge and timely delivery impressed me. Their expertise in statistics significantly boosted my project's quality.",
     university: "University of Toronto",
     country: "Canada",
-    level: "Master&apos;s Student"
+    level: "Master's Student"
   },
   {
     name: "Emily R.",
     avatar: "/avatars/emily.jpg",
-    text: "ScholarStream&apos;s editing service transformed my dissertation. Their attention to detail helped refine my arguments effectively.",
+    text: "ScholarStream's editing service transformed my dissertation. Their attention to detail helped refine my arguments effectively.",
     university: "University of Oxford",
     country: "UK",
     level: "Doctoral Researcher"
@@ -48,10 +48,10 @@ const testimonials = [
   {
     name: "James W.",
     avatar: "/avatars/james.jpg",
-    text: "As an international student, ScholarStream&apos;s language support improved my academic writing skills significantly.",
+    text: "As an international student, ScholarStream's language support improved my academic writing skills significantly.",
     university: "University of British Columbia",
     country: "Canada",
-    level: "Master&apos;s Student"
+    level: "Master's Student"
   },
   {
     name: "Olivia K.",
@@ -67,12 +67,12 @@ const testimonials = [
     text: "Their math tutoring sessions helped me overcome my fear of calculus. I now feel confident tackling complex problems.",
     university: "ETH Zurich",
     country: "Switzerland",
-    level: "Master&apos;s Student"
+    level: "Master's Student"
   },
   {
     name: "Ava M.",
     avatar: "/avatars/ava.jpg",
-    text: "ScholarStream&apos;s guidance on my thesis was invaluable. Their insights helped shape my research in meaningful ways.",
+    text: "ScholarStream's guidance on my thesis was invaluable. Their insights helped shape my research in meaningful ways.",
     university: "London School of Economics",
     country: "UK",
     level: "Ph.D. Candidate"

@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import React, { useRef, useEffect } from 'react'
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import React, { useRef, useEffect } from 'react';
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const testimonials = [
   {
     name: "Sarah J.",
     avatar: "/avatars/sarah.jpg",
-    text: "ScholarStream's research paper assistance was outstanding. It greatly improved my understanding of the subject.",
+    text: "ScholarStream&apos;s research paper assistance was outstanding. It greatly improved my understanding of the subject.",
     university: "Harvard University",
     country: "USA",
     level: "Ph.D. Candidate"
@@ -16,15 +16,15 @@ const testimonials = [
   {
     name: "Michael T.",
     avatar: "/avatars/michael.jpg",
-    text: "The depth of knowledge and timely delivery impressed me. Their expertise in statistics significantly boosted my project's quality.",
+    text: "The depth of knowledge and timely delivery impressed me. Their expertise in statistics significantly boosted my project&apos;s quality.",
     university: "University of Toronto",
     country: "Canada",
-    level: "Master's Student"
+    level: "Master&apos;s Student"
   },
   {
     name: "Emily R.",
     avatar: "/avatars/emily.jpg",
-    text: "ScholarStream's editing service transformed my dissertation. Their attention to detail helped refine my arguments effectively.",
+    text: "ScholarStream&apos;s editing service transformed my dissertation. Their attention to detail helped refine my arguments effectively.",
     university: "University of Oxford",
     country: "UK",
     level: "Doctoral Researcher"
@@ -48,10 +48,10 @@ const testimonials = [
   {
     name: "James W.",
     avatar: "/avatars/james.jpg",
-    text: "As an international student, ScholarStream's language support improved my academic writing skills significantly.",
+    text: "As an international student, ScholarStream&apos;s language support improved my academic writing skills significantly.",
     university: "University of British Columbia",
     country: "Canada",
-    level: "Master's Student"
+    level: "Master&apos;s Student"
   },
   {
     name: "Olivia K.",
@@ -67,12 +67,12 @@ const testimonials = [
     text: "Their math tutoring sessions helped me overcome my fear of calculus. I now feel confident tackling complex problems.",
     university: "ETH Zurich",
     country: "Switzerland",
-    level: "Master's Student"
+    level: "Master&apos;s Student"
   },
   {
     name: "Ava M.",
     avatar: "/avatars/ava.jpg",
-    text: "ScholarStream's guidance on my thesis was invaluable. Their insights helped shape my research in meaningful ways.",
+    text: "ScholarStream&apos;s guidance on my thesis was invaluable. Their insights helped shape my research in meaningful ways.",
     university: "London School of Economics",
     country: "UK",
     level: "Ph.D. Candidate"
@@ -85,27 +85,27 @@ const testimonials = [
     country: "USA",
     level: "Undergraduate"
   }
-]
+];
 
 export default function Testimonials() {
-  const scrollRef1 = useRef<HTMLDivElement>(null)
-  const scrollRef2 = useRef<HTMLDivElement>(null)
+  const scrollRef1 = useRef<HTMLDivElement>(null);
+  const scrollRef2 = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const scroll1 = scrollRef1.current
-    const scroll2 = scrollRef2.current
+    const scroll1 = scrollRef1.current;
+    const scroll2 = scrollRef2.current;
     if (scroll1 && scroll2) {
-      const scrollWidth1 = scroll1.scrollWidth / 2
-      const scrollWidth2 = scroll2.scrollWidth / 2
-      const animationDuration1 = scrollWidth1 / 30
-      const animationDuration2 = scrollWidth2 / 25 // Slightly different speed for variety
+      const scrollWidth1 = scroll1.scrollWidth / 2;
+      const scrollWidth2 = scroll2.scrollWidth / 2;
+      const animationDuration1 = scrollWidth1 / 30;
+      const animationDuration2 = scrollWidth2 / 25; // Slightly different speed for variety
 
-      scroll1.style.setProperty('--scroll-width', `${scrollWidth1}px`)
-      scroll1.style.setProperty('--animation-duration', `${animationDuration1}s`)
-      scroll2.style.setProperty('--scroll-width', `${scrollWidth2}px`)
-      scroll2.style.setProperty('--animation-duration', `${animationDuration2}s`)
+      scroll1.style.setProperty('--scroll-width', `${scrollWidth1}px`);
+      scroll1.style.setProperty('--animation-duration', `${animationDuration1}s`);
+      scroll2.style.setProperty('--scroll-width', `${scrollWidth2}px`);
+      scroll2.style.setProperty('--animation-duration', `${animationDuration2}s`);
     }
-  }, [])
+  }, []);
 
   const renderTestimonials = (start: number, end: number) => (
     <>
@@ -128,7 +128,7 @@ export default function Testimonials() {
         </Card>
       ))}
     </>
-  )
+  );
 
   return (
     <section id="testimonials" className="py-20 bg-gray-50 overflow-hidden">
@@ -184,6 +184,5 @@ export default function Testimonials() {
         }
       `}</style>
     </section>
-  )
+  );
 }
-

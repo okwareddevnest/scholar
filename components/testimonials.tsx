@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import React, { useRef, useEffect } from 'react'
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import React, { useRef, useEffect } from 'react';
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const testimonials = [
   {
@@ -85,27 +85,27 @@ const testimonials = [
     country: "USA",
     level: "Undergraduate"
   }
-]
+];
 
 export default function Testimonials() {
-  const scrollRef1 = useRef<HTMLDivElement>(null)
-  const scrollRef2 = useRef<HTMLDivElement>(null)
+  const scrollRef1 = useRef<HTMLDivElement>(null);
+  const scrollRef2 = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const scroll1 = scrollRef1.current
-    const scroll2 = scrollRef2.current
+    const scroll1 = scrollRef1.current;
+    const scroll2 = scrollRef2.current;
     if (scroll1 && scroll2) {
-      const scrollWidth1 = scroll1.scrollWidth / 2
-      const scrollWidth2 = scroll2.scrollWidth / 2
-      const animationDuration1 = scrollWidth1 / 30
-      const animationDuration2 = scrollWidth2 / 25 // Slightly different speed for variety
+      const scrollWidth1 = scroll1.scrollWidth / 2;
+      const scrollWidth2 = scroll2.scrollWidth / 2;
+      const animationDuration1 = scrollWidth1 / 30;
+      const animationDuration2 = scrollWidth2 / 25; // Slightly different speed for variety
 
-      scroll1.style.setProperty('--scroll-width', `${scrollWidth1}px`)
-      scroll1.style.setProperty('--animation-duration', `${animationDuration1}s`)
-      scroll2.style.setProperty('--scroll-width', `${scrollWidth2}px`)
-      scroll2.style.setProperty('--animation-duration', `${animationDuration2}s`)
+      scroll1.style.setProperty('--scroll-width', `${scrollWidth1}px`);
+      scroll1.style.setProperty('--animation-duration', `${animationDuration1}s`);
+      scroll2.style.setProperty('--scroll-width', `${scrollWidth2}px`);
+      scroll2.style.setProperty('--animation-duration', `${animationDuration2}s`);
     }
-  }, [])
+  }, []);
 
   const renderTestimonials = (start: number, end: number) => (
     <>
@@ -128,7 +128,7 @@ export default function Testimonials() {
         </Card>
       ))}
     </>
-  )
+  );
 
   return (
     <section id="testimonials" className="py-20 bg-gray-50 overflow-hidden">
@@ -184,6 +184,5 @@ export default function Testimonials() {
         }
       `}</style>
     </section>
-  )
+  );
 }
-

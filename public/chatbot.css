@@ -1,0 +1,134 @@
+/* chatbot.css */
+
+body {
+    font-family: Arial, sans-serif;
+}
+.chat-bot-image {
+    width: 40px; /* Original size divided by 5 */
+    height: 40px; /* Original size divided by 5 */
+    border-radius: 50%; /* Makes the image circular */
+}
+
+
+
+.chat-header {
+    background-color: #007bff;
+    color: white;
+    padding: 1px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    text-align: right ;
+}
+
+.chat-messages {
+    padding: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
+    max-height: 400px;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.chat-input button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-left: 5px;body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0; /* Light background for better contrast */
+    }
+    
+    .chat-container {
+        position: fixed;
+        bottom: 20px; /* Distance from the bottom */
+        right: 20px; /* Distance from the right */
+        width: 300px; /* Width of the chatbot */
+        height: auto; /* Adjust height based on content */
+        background: linear-gradient(135deg, #f9f9f9, #e0e0e0); /* Gradient background */
+        border-radius: 15px; /* Rounded corners */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+        display: flex;
+        flex-direction: column;
+        z-index: 1000; /* Ensure it appears above other elements */
+    }
+    
+    .chat-header {
+        background-color: #007bff; /* Header color */
+        color: white; /* Text color */
+        padding: 10px;
+        border-top-left-radius: 15px; /* Rounded corners */
+        border-top-right-radius: 15px; /* Rounded corners */
+        text-align: center;
+    }
+    
+    .chat-messages {
+        padding: 10px;
+        overflow-y: auto; /* Scrollable messages */
+        max-height: 400px; /* Limit height */
+    }
+    
+    .user-message, .chatbot-message {
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 10px; /* Rounded corners for messages */
+        max-width: 80%; /* Limit message width */
+    }
+    
+    .user-message {
+        background-color: #d1e7dd; /* Light green for user messages */
+        align-self: flex-end; /* Align user messages to the right */
+    }
+    
+    .chatbot-message {
+        background-color: #e2e3e5; /* Light gray for chatbot messages */
+        align-self: flex-start; /* Align chatbot messages to the left */
+    }
+    
+    .chat-input {
+        display: flex; /* Flexbox for input and button */
+        padding: 10px;
+    }
+    
+    .chat-input input {
+        flex-grow: 1; /* Take remaining space */
+        padding: 10px;
+        border: 1px solid #ccc; /* Border */
+        border-radius: 5px; /* Rounded corners */
+    }
+    
+    .chat-input button {
+        background-color: #007bff; /* Button color */
+        color: white; /* Button text color */
+        border: none; /* No border */
+        border-radius: 5px; /* Rounded corners */
+        padding: 10px 15px; /* Padding */
+        margin-left: 5px; /* Space between input and button */
+        cursor: pointer; /* Pointer cursor */
+    }
+    
+    .chat-input button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background-color: #0056b3;
+    .chat-bot-image {
+        width: 40px; /* Adjust the size as needed */
+        height: 40px; /* Adjust the size as needed */
+        border-radius: 50%; /* Makes the image cicular */
+    }
+}

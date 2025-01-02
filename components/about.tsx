@@ -3,17 +3,17 @@ import React from 'react';
 const About: React.FC = () => {
   return (
     <section id="about" className="relative py-20 bg-gray-50">
-      <div className="container mx-auto px-4 relative z-10 flex flex-wrap justify-between">
-        <div className="max-w-3xl text-left bg-white p-8 rounded-lg shadow-lg mb-6">
+      <div className="container mx-auto px-4 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="max-w-3xl text-left bg-white p-8 rounded-lg shadow-lg mb-6 animate-fade-in">
           <h2 className="text-4xl font-bold mb-6 text-blue-600">About ScholarStream</h2>
-          <p className="mb-6 text-gray-700 leading-relaxed animate-fade-in">
+          <p className="mb-4 text-gray-700 leading-relaxed">
             ScholarStream is dedicated to empowering students worldwide with top-notch academic support.
           </p>
-          <p className="mb-6 text-gray-700 leading-relaxed animate-fade-in delay-200">
+          <p className="mb-4 text-gray-700 leading-relaxed">
             Our mission is to make quality education accessible to all, helping students achieve their academic goals and unlock their full potential.
           </p>
-          <p className="text-gray-700 leading-relaxed animate-fade-in delay-400">
-            Founded by a team of passionate educators and industry experts, ScholarStream combines cutting-edge technology with personalized learning approaches to deliver an unparalleled educational experience.
+          <p className="text-gray-700 leading-relaxed">
+            Founded by a team of passionate educators and industry experts, we strive to provide personalized assistance tailored to each student's needs.
           </p>
         </div>
         <div className="relative max-w-md w-full mb-6"> {/* Container for the video */}
@@ -30,6 +30,6 @@ const About: React.FC = () => {
       </div>
     </section>
   );
-}
+};
 
 export default About;

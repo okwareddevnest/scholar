@@ -7,6 +7,9 @@ import Features from '../components/features'; // Adjusted path
 import Testimonials from '../components/testimonials'; // Adjusted path
 import ContactForm from '../components/contact-form'; // Adjusted path
 import Footer from '../components/footer'; // Adjusted path
+import Link from 'next/link'; // Import Link from next/link
+import FAQ from '../components/FAQ'; // Import the FAQ component
+import Chatbot from '../components/chatbot'; // Import the Chatbot component
 
 // Define the Home component
 const Home: React.FC = () => {
@@ -21,8 +24,11 @@ const Home: React.FC = () => {
         <Features />
         <Testimonials />
         <ContactForm />
+        <Link href="/feedback">Go to Feedback</Link> {/* Add link to Feedback page */}
+        <FAQ /> {/* Add the FAQ component here */}
       </main>
       <Footer />
+      <Chatbot /> {/* Add the Chatbot component here */}
     </div>
   );
 }

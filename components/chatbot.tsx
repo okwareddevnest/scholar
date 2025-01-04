@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image'; // Import Image from Next.js
+import { IconButton, Avatar, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, Typography, Box } from '@mui/material';
+import ChatIcon from '@mui/icons-material/Chat';
 
 const Chatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,56 +45,53 @@ const Chatbot: React.FC = () => {
 
   return (
     <div>
-      <button 
+      <IconButton 
         onClick={toggleChat} 
-        className="fixed bottom-4 right-4 p-3 bg-transparent border-none"
+        style={{ position: 'fixed', bottom: 16, right: 16, backgroundColor: 'transparent' }}
         title={isOpen ? "Dismiss Chat" : "Chat with our Virtual Assistant"} // Tooltip for the chatbot icon
       >
-        <Image 
+        <Avatar 
           src="/images/Girl_with_headset.webp" // Adjust the path as necessary
           alt="Chatbot"
-          width={80} // Standard width of the image
-          height={80} // Standard height of the image
-          className="rounded-full shadow-lg cursor-pointer"
-        />
-      </button>
-      {isOpen && (
-        <div className="fixed bottom-16 right-4 w-96 bg-white shadow-lg rounded-lg p-4">
-          <div className="flex justify-between items-center">
-            <h3 className="font-bold mb-2">Chat with us!</h3>
-            <button 
-              onClick={toggleChat} 
-              className="text-gray-500"
-              title="Close Chat"
-            >
+          style={{ width: 80, height: 80 }}
+        >
+          <ChatIcon />
+        </Avatar>
+      </IconButton>
+      <Dialog open={isOpen} onClose={toggleChat} fullWidth maxWidth="sm">
+        <DialogTitle>
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Typography variant="h6">Chat with us!</Typography>
+            <IconButton onClick={toggleChat} title="Close Chat">
               &times; {/* Close button */}
-            </button>
-          </div>
-          <div className="h-40 overflow-y-auto">
+            </IconButton>
+          </Box>
+        </DialogTitle>
+        <DialogContent dividers>
+          <Box height={300} overflow="auto">
             {messages.map((msg, index) => (
-              <div key={index} className={msg.sender === 'User' ? 'text-right' : 'text-left'}>
-                <p className={msg.sender === 'User' ? 'text-blue-500' : 'text-gray-700'}>
+              <Box key={index} textAlign={msg.sender === 'User' ? 'right' : 'left'} mb={1}>
+                <Typography variant="body1" color={msg.sender === 'User' ? 'primary' : 'textSecondary'}>
                   {msg.text}
-                </p>
-              </div>
+                </Typography>
+              </Box>
             ))}
-          </div>
-          <input 
-            type="text" 
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <TextField 
+            fullWidth 
+            variant="outlined" 
+            placeholder="Type your message..." 
             value={userMessage} 
             onChange={(e) => setUserMessage(e.target.value)} 
-            placeholder="Type your message..." 
-            className="border rounded w-full p-2 mt-2"
             onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
           />
-          <button 
-            onClick={handleSendMessage} 
-            className="mt-2 w-full bg-blue-600 text-white rounded p-2"
-          >
+          <Button onClick={handleSendMessage} variant="contained" color="primary">
             Send
-          </button>
-        </div>
-      )}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

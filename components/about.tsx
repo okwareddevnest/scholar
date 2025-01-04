@@ -15,8 +15,23 @@ const About: React.FC = () => {
           <p className="text-gray-700 leading-relaxed">
             Founded by a team of passionate educators and industry experts, we strive to provide personalized assistance tailored to each student's needs.
           </p>
+          
+          {/* Testimonials Section */}
+          <h3 className="text-2xl font-semibold mt-8">What Our Students Say</h3>
+          <div className="mt-4">
+            <p className="italic">"ScholarStream helped me improve my grades significantly!" - Jane Doe</p>
+            <p className="italic">"The personalized support was exactly what I needed." - John Smith</p>
+          </div>
+
+          {/* Call to Action */}
+          <div className="mt-6">
+            <a href="/signup" className="inline-block bg-blue-600 text-white px-4 py-2 rounded">
+              Sign Up for Our Services
+            </a>
+          </div>
         </div>
-        <div className="relative max-w-md w-full mb-6"> {/* Container for the video */}
+        
+        <div className="relative max-w-md w-full mb-6">
           <video className="absolute inset-0 w-full h-full object-cover rounded-lg shadow-lg" loop autoPlay muted>
             <source src="/about.mp4" type="video/mp4" />
             Your browser does not support the video tag.

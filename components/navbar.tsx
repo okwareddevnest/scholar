@@ -19,11 +19,21 @@ const Navbar: React.FC = () => {
 
     try {
       const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`);
+      
+      // Check if the response is OK (status in the range 200-299)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
       console.log("Search results:", data);
       // Handle the search results (e.g., redirect to a results page)
+      // You can navigate to a search results page or display results in the UI
     } catch (error) {
       console.error("Error fetching search results:", error);
+      if (error instanceof Error) {
+        console.error("Error message:", error.message);
+      }
     }
   };
 

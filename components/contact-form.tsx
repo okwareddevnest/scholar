@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { TextField, Button, Box, Typography, Grid, Paper } from '@mui/material';
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,65 +26,68 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
-      <div className="p-6">
-        <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
-        {submitted && (
-          <p 
-            style={{
-              opacity: 1,
-              transition: 'opacity 0.5s ease-in',
-              animation: 'fadeIn 0.5s forwards',
-              color: 'green', 
-              marginBottom: '16px'
-            }}
-          >
-            Thank you for your message!
-          </p>
-        )}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <Input 
-              name="name" 
-              placeholder="Your Name" 
-              value={formData.name} 
-              onChange={handleChange} 
-              required 
-            />
-          </div>
-          <div className="mb-4">
-            <Input 
-              type="email" 
-              name="email" 
-              placeholder="Your Email" 
-              value={formData.email} 
-              onChange={handleChange} 
-              required 
-            />
-          </div>
-          <div className="mb-4">
-            <Textarea 
-              name="message" 
-              placeholder="Your Message" 
-              value={formData.message} 
-              onChange={handleChange} 
-              required 
-            />
-          </div>
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Sending...' : 'Send Message'}
-          </Button>
-        </form>
-      </div>
-      <div className="p-6 bg-gray-100 rounded-lg shadow-inner">
-        <h3 className="text-lg font-semibold mb-2">Connect with Us</h3>
-        <p>Email: discounthomeworkhelper@gmail.com</p>
-        <p>Phone: +92 340 1258059</p>
-        <p>Follow us on social media!</p>
-        <div className="mt-4">
-          <p className="text-sm text-gray-600">We are here to help you!</p>
-        </div>
-      </div>
-    </div>
+    <Box maxWidth="lg" mx="auto" p={3}>
+      <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={6}>
+            <Typography variant="h4" gutterBottom>Contact Us</Typography>
+            {submitted && (
+              <Typography 
+                variant="body1" 
+                color="success.main" 
+                sx={{ mb: 2, transition: 'opacity 0.5s ease-in', animation: 'fadeIn 0.5s forwards' }}
+              >
+                Thank you for your message!
+              </Typography>
+            )}
+            <form onSubmit={handleSubmit}>
+              <Box mb={3}>
+                <TextField 
+                  fullWidth 
+                  label="Your Name" 
+                  name="name" 
+                  value={formData.name} 
+                  onChange={handleChange} 
+                  required 
+                />
+              </Box>
+              <Box mb={3}>
+                <TextField 
+                  fullWidth 
+                  type="email" 
+                  label="Your Email" 
+                  name="email" 
+                  value={formData.email} 
+                  onChange={handleChange} 
+                  required 
+                />
+              </Box>
+              <Box mb={3}>
+                <TextField 
+                  fullWidth 
+                  label="Your Message" 
+                  name="message" 
+                  value={formData.message} 
+                  onChange={handleChange} 
+                  required 
+                  multiline 
+                  rows={4} 
+                />
+              </Box>
+              <Button type="submit" variant="contained" color="primary" disabled={isSubmitting} fullWidth>
+                {isSubmitting ? 'Sending...' : 'Send Message'}
+              </Button>
+            </form>
+          </Grid>
+          <Grid item xs={12} md={6} sx={{ bgcolor: 'background.default', p: 3, borderRadius: 2 }}>
+            <Typography variant="h5" gutterBottom>Connect with Us</Typography>
+            <Typography variant="body1">Email: discounthomeworkhelper@gmail.com</Typography>
+            <Typography variant="body1">Phone: +92 340 1258059</Typography>
+            <Typography variant="body1" gutterBottom>Follow us on social media!</Typography>
+            <Typography variant="body2" color="textSecondary">We are here to help you!</Typography>
+          </Grid>
+        </Grid>
+      </Paper>
+    </Box>
   );
 }

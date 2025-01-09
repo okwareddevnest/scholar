@@ -25,7 +25,7 @@ const About: React.FC = () => {
 
           {/* Call to Action */}
           <div className="mt-6">
-            <a href="/signup" className="inline-block bg-blue-600 text-white px-4 py-2 rounded">
+            <a href="/signup" className="inline-block bg-blue-600 text-white px-4 py-2 rounded transition duration-300 hover:bg-blue-700">
               Sign Up for Our Services
             </a>
           </div>

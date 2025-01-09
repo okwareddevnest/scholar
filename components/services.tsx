@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'components/ui/card';
+import { Badge } from 'components/ui/badge';
 import { PenLine, BookOpen, GraduationCap, Sparkles, Calculator, Globe, BarChart, Code, BookOpenCheck, FileSearch, Microscope, Lightbulb } from 'lucide-react';
 
 const services = [

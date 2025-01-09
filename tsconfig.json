@@ -1,5 +1,5 @@
-{    "allowImportingTsExtensions": true,
-
+{
+  "allowImportingTsExtensions": true,
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -25,7 +25,7 @@
       }
     ],
     "paths": {
-      "@/*": [
+      "*": [
         "./*"
       ]
     }

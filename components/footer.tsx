@@ -1,79 +1,64 @@
-import Image from 'next/image';
-import { WhatsAppLogoIcon } from './whatsapp-logo-icon';
-import { Facebook, Instagram, Twitter } from 'lucide-react';
-import Link from 'next/link';
+import React from 'react';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import TwitterIcon from '@mui/icons-material/Twitter';
 
-const Footer: React.FC = () => {
+const UpdatedFooter = () => {
   return (
-    <footer className="bg-purple-600 text-white py-12">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          {/* Logo Section */}
-          <div className="mb-8 md:mb-0">
-            <Link href="/" className="flex items-center space-x-2">
-              <Image
-                src="/images/logo.png"
-                alt="Homework Helper Logo - Three graduates reading from an open book"
-                width={50}
-                height={50}
-                className="object-contain"
-                priority
-              />
-            </Link>
+    <footer className="bg-gray-800 text-white py-10">
+      <div className="container mx-auto">
+        <div className="flex justify-between">
+          <div className="flex flex-col items-start">
+            <img src="/images/logo.png" alt="Logo" className="h-10 w-auto mb-2" />
+            <h2 className="text-xl font-bold">Scholarstream</h2>
+            <p className="text-sm">Professional academic writing services for students worldwide.</p>
           </div>
-
-          {/* Contact and Social Links */}
-          <div className="flex flex-col items-center md:items-end space-y-4">
-            {/* Contact Section */}
-            <div className="flex items-center space-x-4">
-              <WhatsAppLogoIcon className="w-6 h-6 text-[#25D366]" />
-              <Link
-                href="https://wa.me/923401258059"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline"
-              >
-                +92 340 1258059
-              </Link>
+          <div className="flex flex-row justify-between w-full">
+            <div className="flex flex-col items-end mr-5">
+              <h3 className="text-lg font-semibold">Contact</h3>
+              <p className="text-sm">discounthomeworkhelper@gmail.com</p>
+              <p className="text-sm">+92 340 1258059</p>
             </div>
-
-            {/* Social Media Icons */}
-            <div className="flex space-x-6">
-              <Link
-                href="https://www.facebook.com/discounthomeworkhelper"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Follow us on Facebook"
-              >
-                <Facebook className="w-6 h-6 text-[#1877F2]" />
-              </Link>
-              <Link
-                href="https://www.instagram.com/discounthomeworkhelper"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Follow us on Instagram"
-              >
-                <Instagram className="w-6 h-6 text-[#E4405F]" />
-              </Link>
-              <Link
-                href="https://x.com/HomeworkHelp786?t=cXt4j7VJL3kK7VIP-cG2Cw&s=09"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Follow us on Twitter"
-              >
-                <Twitter className="w-6 h-6 text-[#1DA1F2]" />
-              </Link>
+            <div className="flex flex-col items-start">
+              <h3 className="text-lg font-semibold">Company</h3>
+              <a href="/about" className="text-sm">About Us</a>
+              <a href="/careers" className="text-sm">Careers</a>
+              <a href="/privacy-policy" className="text-sm">Privacy Policy</a>
+              <a href="/terms-of-service" className="text-sm">Terms of Service</a>
+            </div>
+            <div className="flex flex-col items-start">
+              <h3 className="text-lg font-semibold">Quick Links</h3>
+              <a href="/" className="text-sm">Home</a>
+              <a href="/services" className="text-sm">Services</a>
+              <a href="/blogs" className="text-sm">Blog</a>
+              <a href="/contact" className="text-sm">Contact Us</a>
             </div>
           </div>
         </div>
-
-        {/* Footer Bottom Section */}
-        <div className="mt-8 text-center md:text-left">
-          <p>&copy; 2024 Homework Helper. All rights reserved.</p>
+        <div className="flex flex-col items-end mt-5">
+          <h3 className="text-lg font-semibold">Follow Us</h3>
+          <div className="flex space-x-4">
+            <a href="https://www.facebook.com/discounthomeworkhelper" target="_blank" rel="noopener noreferrer" title="Follow us on Facebook">
+              <FacebookIcon style={{ color: '#3b5998' }} className="h-6 w-6" />
+            </a>
+            <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" title="Chat with us on WhatsApp">
+              <WhatsAppIcon style={{ color: '#25D366' }} className="h-6 w-6" />
+            </a>
+            <a href="https://www.instagram.com/discounthomeworkhelper" target="_blank" rel="noopener noreferrer" title="Follow us on Instagram">
+              <InstagramIcon style={{ color: '#E1306C' }} className="h-6 w-6" />
+            </a>
+            <a href="https://x.com/HomeworkHelp786?t=cXt4j7VJL3kK7VIP-cG2Cw&s=09" target="_blank" rel="noopener noreferrer" title="Follow us on X">
+              <TwitterIcon style={{ color: '#1DA1F2' }} className="h-6 w-6" />
+            </a>
+          </div>
         </div>
+      </div>
+      <div className="text-center mt-5">
+        <p className="text-sm">© 2025 Scholarstream. All rights reserved.</p>
       </div>
     </footer>
   );
 };
 
-export default Footer;
+export default UpdatedFooter;

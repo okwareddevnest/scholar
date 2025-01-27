@@ -1,71 +1,44 @@
 import React from 'react';
-
-import Navbar from '../components/navbar';
 import Hero from '../components/hero';
 import About from '../components/about';
 import Services from '../components/services';
-import Solutions from '../components/solutions';
-import Features from '../components/features';
-import Testimonials from '../components/testimonials';
-import ContactForm from '../components/contact-form';
-import PriceCalculator from '../components/PriceCalculator';
-import Footer from '../components/footer';
-import Link from 'next/link';
-import FAQ from '../components/FAQ';
-import Chatbot from '../components/chatbot';
-import { Container, Box, Typography, Button, Grid } from '@mui/material';
-import ContactUs from '../components/ContactUs';
-import UserReviews from '../components/UserReviews';
+import FAQ from '../components/FAQ'; // Import the FAQ component
+import Link from 'next/link'; // Use next/link for navigation
+import { Button, Box } from '@mui/material'; // Import Material-UI Button and Box
+import Chatbot from '../components/chatbot'; // Import the Chatbot component
+import Footer from '../components/footer'; // Import the Footer component
+import MainNavbar from '../components/MainNavbar'; // Use the new MainNavbar
 
-const Home: React.FC = () => {
+const HomePage = () => {
   return (
-    <Container maxWidth={false} disableGutters>
-      <Navbar className="bg-white shadow-md" />
-      <main>
-        <Hero />
-        <Box py={6}>
-          
-        </Box>
-        <UserReviews />
-        <Box py={6}>
-          <About />
-        </Box>
-        <Box py={6} bgcolor="background.paper">
-          <Services />
-        </Box>
-        <Box py={6}>
-          <Solutions />
-        </Box>
-        <Box py={6} bgcolor="background.paper">
-          <Features />
-        </Box>
-        <Box py={6}>
-          <Testimonials />
-        </Box>
-        <Box py={6} bgcolor="background.paper">
-          <ContactForm />
-        </Box>
-        <Box py={6} bgcolor="background.paper">
-          <PriceCalculator />
-        </Box>
-        <Grid container justifyContent="center" py={6}>
-          <Grid item>
-            <Link href="/blogs" passHref>
-              <Button variant="contained" color="primary">
-                View All Blogs
-              </Button>
-            </Link>
-          </Grid>
-        </Grid>
-        <Box py={6} bgcolor="background.paper">
-          <FAQ />
-        </Box>
-        <ContactUs />
-      </main>
-      <Footer />
-      <Chatbot />
-    </Container>
+    <div>
+      <MainNavbar />
+      <Hero />
+      <About />
+      <Services />
+      <Box py={6} bgcolor="background.paper">
+        <FAQ /> {/* Add the FAQ component here */}
+      </Box>
+      <div className="text-center mt-4">
+        <Link href="/faq" className="text-blue-500 hover:underline">
+          Frequently Asked Questions
+        </Link>
+      </div>
+      <div className="text-center mt-4">
+        <h3>Reach out to us on WhatsApp</h3>
+        <Button 
+          variant="contained" 
+          color="primary" 
+          href="https://wa.me/923401258059" // Updated with the provided WhatsApp number
+          target="_blank"
+        >
+          Contact Us on WhatsApp
+        </Button>
+      </div>
+      <Chatbot /> {/* Add the Chatbot component here */}
+      <Footer /> {/* Ensure the footer is included here */}
+    </div>
   );
-}
+};
 
-export default Home;
+export default HomePage;

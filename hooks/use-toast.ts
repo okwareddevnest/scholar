@@ -2,7 +2,7 @@
 
 // Inspired by react-hot-toast library
 import * as React from "react";
-import ToastActionElement, { ToastProps } from "@/components/ui/toast"; // Adjust this path if necessary
+import ToastActionElement, { ToastProps } from 'components/ui/toast'; // Corrected import statement
 
 const TOAST_LIMIT = 1;
 const TOAST_REMOVE_DELAY = 1000000;
@@ -143,13 +143,13 @@ export function toast({ ...props }: Toast) {
   const toast: ToasterToast = {
     id,
     ...props,
-        type: props.type || "default",
-      };
-    
-      dispatch({
-        type: actionTypes.ADD_TOAST,
-        toast,
-      });
-    
-      return id;
-    }
+    type: props.type || "default",
+  };
+
+  dispatch({
+    type: actionTypes.ADD_TOAST,
+    toast,
+  });
+
+  return id;
+}

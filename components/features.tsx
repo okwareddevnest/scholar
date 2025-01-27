@@ -25,12 +25,12 @@ export default function Features() {
       </video>
 
       <div className="relative z-10 container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12 text-white">Why Choose Us</h2>
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-white">Why Choose Us</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <div key={index} className="flex items-center space-x-4 p-6 bg-white rounded-lg shadow-lg transition-transform transform hover:scale-105">
               <CheckCircle className="text-green-500 h-8 w-8" />
-              <span className="text-lg font-medium text-gray-800">{feature}</span>
+              <span className="text-base md:text-lg lg:text-xl font-medium text-gray-800">{feature}</span>
             </div>
           ))}
         </div>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { TextField, Button, Box, Typography, Grid, Paper } from '@mui/material';
+import './contact-form.css'; // Import the CSS file
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -20,17 +21,35 @@ export default function ContactForm() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmitting(true);
-    // Assume submission logic here
-    setSubmitted(true);
-    setIsSubmitting(false);
+
+    try {
+      const response = await fetch('/api/submitContact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Submission failed');
+      }
+
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('There was an error submitting your message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <Box maxWidth="lg" mx="auto" p={3}>
-      <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
+    <Box className="contact-container">
+      <Paper className="contact-paper" elevation={3}>
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
-            <Typography variant="h4" gutterBottom>Contact Us</Typography>
+            <Typography className="contact-title" gutterBottom>Contact Us</Typography>
             {submitted && (
               <Typography 
                 variant="body1" 
@@ -40,9 +59,10 @@ export default function ContactForm() {
                 Thank you for your message!
               </Typography>
             )}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="contact-form">
               <Box mb={3}>
                 <TextField 
+                  className="contact-input"
                   fullWidth 
                   label="Your Name" 
                   name="name" 
@@ -53,6 +73,7 @@ export default function ContactForm() {
               </Box>
               <Box mb={3}>
                 <TextField 
+                  className="contact-input"
                   fullWidth 
                   type="email" 
                   label="Your Email" 
@@ -64,6 +85,7 @@ export default function ContactForm() {
               </Box>
               <Box mb={3}>
                 <TextField 
+                  className="contact-input"
                   fullWidth 
                   label="Your Message" 
                   name="message" 
@@ -74,12 +96,12 @@ export default function ContactForm() {
                   rows={4} 
                 />
               </Box>
-              <Button type="submit" variant="contained" color="primary" disabled={isSubmitting} fullWidth>
+              <Button type="submit" className="contact-button" disabled={isSubmitting} fullWidth>
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </Button>
             </form>
           </Grid>
-          <Grid item xs={12} md={6} sx={{ bgcolor: 'background.default', p: 3, borderRadius: 2 }}>
+          <Grid item xs={12} md={6} className="contact-info">
             <Typography variant="h5" gutterBottom>Connect with Us</Typography>
             <Typography variant="body1">Email: discounthomeworkhelper@gmail.com</Typography>
             <Typography variant="body1">Phone: +92 340 1258059</Typography>

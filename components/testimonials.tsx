@@ -3,6 +3,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Card, CardContent, CardHeader } from "components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "components/ui/avatar";
+import './testimonials.css'; // Import the CSS file
 
 const testimonials = [
   {
@@ -117,13 +118,13 @@ export default function Testimonials() {
               <AvatarFallback>{testimonial.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
             </Avatar>
             <div>
-              <h3 className="font-semibold">{testimonial.name}</h3>
-              <p className="text-sm text-gray-500">{testimonial.university}</p>
+              <h3 className="font-semibold text-lg md:text-xl">{testimonial.name}</h3>
+              <p className="text-sm md:text-base text-gray-500">{testimonial.university}</p>
             </div>
           </CardHeader>
           <CardContent>
-            <p className="text-sm italic">&ldquo;{testimonial.text}&rdquo;</p>
-            <p className="text-xs text-gray-500 mt-2">{testimonial.level} - {testimonial.country}</p>
+            <p className="text-sm md:text-base italic">&ldquo;{testimonial.text}&rdquo;</p>
+            <p className="text-xs md:text-sm text-gray-500 mt-2">{testimonial.level} - {testimonial.country}</p>
           </CardContent>
         </Card>
       ))}
@@ -133,15 +134,11 @@ export default function Testimonials() {
   return (
     <section id="testimonials" className="py-20 bg-gray-50 overflow-hidden">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">What Our Students Say</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">What Our Students Say</h2>
         <div className="relative">
           <div 
             ref={scrollRef1}
             className="flex space-x-4 overflow-hidden mb-8"
-            style={{
-              width: '200%',
-              display: 'flex',
-            }}
           >
             <div className="flex space-x-4 animate-scroll">
               {renderTestimonials(0, 5)}
@@ -153,10 +150,6 @@ export default function Testimonials() {
           <div 
             ref={scrollRef2}
             className="flex space-x-4 overflow-hidden"
-            style={{
-              width: '200%',
-              display: 'flex',
-            }}
           >
             <div className="flex space-x-4 animate-scroll-reverse">
               {renderTestimonials(5, 10)}
@@ -167,22 +160,6 @@ export default function Testimonials() {
           </div>
         </div>
       </div>
-      <style jsx>{`
-        @keyframes scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(calc(-50% - 1rem)); }
-        }
-        @keyframes scroll-reverse {
-          0% { transform: translateX(calc(-50% - 1rem)); }
-          100% { transform: translateX(0); }
-        }
-        .animate-scroll {
-          animation: scroll var(--animation-duration) linear infinite;
-        }
-        .animate-scroll-reverse {
-          animation: scroll-reverse var(--animation-duration) linear infinite;
-        }
-      `}</style>
     </section>
   );
 }

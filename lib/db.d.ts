@@ -1,6 +1,5 @@
 declare module 'db' {
-  import { Connection } from 'mysql';
-
-  const connection: Connection;
+  import { Pool } from 'mysql2/promise';
+  const connection: Pool;
   export default connection;
 }

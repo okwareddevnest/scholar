@@ -1,6 +1,5 @@
 import React from 'react';
 import ContactUs from '../components/ContactUs'; // Corrected import path
-import Navbar from '../components/navbar_new'; // Import the Navbar component
 import Hero from '../components/hero'; // Adjusted path
 import About from '../components/about'; // Adjusted path
 import Services from '../components/services'; // Adjusted path
@@ -16,6 +15,7 @@ import Chatbot from '../components/chatbot'; // Import the Chatbot component
 import { Container, Box, Typography, Button, Grid } from '@mui/material'; // Import Material-UI components
 import UserReviews from '../components/UserReviews'; // Import UserReviews component
 import BlogPosts from '../components/BlogPosts'; // Import BlogPosts component
+import Navbar from 'components/navbar';
 
 const Home: React.FC = () => {
   return (

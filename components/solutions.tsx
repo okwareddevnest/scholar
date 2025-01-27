@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import { CheckCircle } from 'lucide-react';
-import imageSrc from '../public/images/5.jpg'; // Adjust the path as necessary
+import Image from "next/image";
+import { CheckCircle } from "lucide-react";
+import imageSrc from "../public/images/5.jpg"; // Adjust the path as necessary
 
 const solutionsList: string[] = [
   "Customized study plans",
@@ -8,36 +8,49 @@ const solutionsList: string[] = [
   "Comprehensive study materials",
   "Practice tests and quizzes",
   "Writing assistance and feedback",
-  "Research guidance"
+  "Research guidance",
 ];
 
 const Solutions: React.FC = () => {
   return (
-    <section id="solutions" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
-        <div className="md:w-1/2 mb-8 md:mb-0 flex flex-col justify-center">
-          <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Our Solutions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <section id="solutions" className="py-20 bg-gradient-to-b from-gray-50 to-gray-200">
+      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
+        {/* Solutions Text and List */}
+        <div className="md:w-1/2">
+          <h2 className="text-4xl font-extrabold text-gray-800 mb-8 text-center md:text-left">
+            Our Solutions
+          </h2>
+          <p className="text-lg text-gray-600 mb-6 text-center md:text-left">
+            Explore a wide range of tailored services designed to enhance your academic success.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {solutionsList.map((solution, index) => (
-              <div key={index} className="flex items-center p-6 bg-gradient-to-r from-teal-400 to-blue-500 text-white rounded-lg shadow-lg transition-transform transform hover:-translate-y-2 hover:shadow-xl duration-300 ease-in-out">
-                <CheckCircle className="flex-shrink-0 h-6 w-6 mr-4" />
-                <span className="text-lg font-medium">{solution}</span>
+              <div
+                key={index}
+                className="flex items-center p-6 bg-gradient-to-r from-blue-500 to-teal-400 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-2 duration-300 ease-in-out"
+              >
+                <div className="flex-shrink-0 bg-white rounded-full p-2">
+                  <CheckCircle className="h-6 w-6 text-teal-500" />
+                </div>
+                <span className="ml-4 text-white font-medium text-lg">{solution}</span>
               </div>
             ))}
           </div>
         </div>
-        <div className="md:w-1/2 flex justify-center items-center">
-          <Image 
+
+        {/* Image Section */}
+        <div className="md:w-1/2 flex justify-center">
+          <Image
             src={imageSrc} // Use the imported image source
-            alt="Solutions Image" 
-            width={500} 
-            height={500} 
-            className="object-cover rounded-lg shadow-lg w-full h-auto max-w-md" // Make the image responsive and limit its max width
+            alt="Students engaging with solutions"
+            width={500}
+            height={500}
+            className="object-cover rounded-lg shadow-lg transition-transform transform hover:scale-105 duration-300 ease-in-out"
           />
         </div>
       </div>
     </section>
   );
-}
+};
 
 export default Solutions;

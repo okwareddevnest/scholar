@@ -4,6 +4,7 @@ import { useRef, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'components/ui/card';
 import { Badge } from 'components/ui/badge';
 import { PenLine, BookOpen, GraduationCap, Sparkles, Calculator, Globe, BarChart, Code, BookOpenCheck, FileSearch, Microscope, Lightbulb } from 'lucide-react';
+import './services.css'; // Import the CSS file
 
 const services = [
   {
@@ -88,14 +89,10 @@ export default function Services() {
       <div className="container mx-auto px-4">
         <h2 id="services-title" className="text-3xl font-bold text-center mb-12 text-purple-800">Our Services</h2>
         <div className="relative">
-          <div 
-            ref={scrollRef}
-            className="flex space-x-4 overflow-hidden"
-            style={{
-              width: '200%',
-              display: 'flex',
-            }}
-          >
+            <div 
+              ref={scrollRef}
+              className="scroll-container flex space-x-4 overflow-hidden"
+            >
             <div className="flex space-x-4 animate-scroll">
               {services.map((service, index) => (
                 <Card key={index} className="flex-shrink-0 w-[300px] relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white">

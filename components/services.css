@@ -1,0 +1,17 @@
+.scroll-container {
+  width: 200%; /* Set width for scrolling effect */
+  display: flex; /* Flexbox for horizontal layout */
+}
+
+.animate-scroll {
+  animation: scroll var(--animation-duration) linear infinite; /* Animation for scrolling */
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

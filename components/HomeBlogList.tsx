@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 interface Blog {
   id: number;
@@ -8,18 +8,11 @@ interface Blog {
   content: string;
 }
 
-const HomeBlogList: React.FC = () => {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
+interface HomeBlogListProps {
+  blogs: Blog[];
+}
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      const response = await fetch('/api/blogs');
-      const data = await response.json();
-      setBlogs(data);
-    };
-    fetchBlogs();
-  }, []);
-
+const HomeBlogList: React.FC<HomeBlogListProps> = ({ blogs }) => {
   return (
     <div>
       <h2>Latest Blog Posts</h2>
@@ -35,5 +28,16 @@ const HomeBlogList: React.FC = () => {
     </div>
   );
 };
+
+export async function getServerSideProps() {
+  const response = await fetch('http://localhost:3000/api/blogs'); // Adjust the URL as needed
+  const data = await response.json();
+
+  return {
+    props: {
+      blogs: data,
+    },
+  };
+}
 
 export default HomeBlogList;

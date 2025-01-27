@@ -1,452 +1,222 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import Link from "next/link";
 import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Paper,
-  Grid,
   Box,
-  LinearProgress,
-  List,
-  ListItem,
-  ListItemText,
-  IconButton,
   AppBar,
   Toolbar,
-  Badge,
-  Menu,
-  MenuItem,
-  Avatar,
-} from '@mui/material';
-import { styled } from '@mui/system';
-import { AttachFile, Send, Notifications, AccountCircle } from '@mui/icons-material';
+  Typography,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Button,
+  TextField,
+  Paper,
+} from "@mui/material";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import MessageIcon from "@mui/icons-material/Message";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import PaymentIcon from "@mui/icons-material/Payment";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChatComponent from '../components/ChatComponent'; // Importing ChatComponent
+import { Value as CalendarValue } from "node_modules/react-calendar/dist/cjs/shared/types";
 
-interface Assignment {
-  id: number;
-  title: string;
-  description: string;
-  studentId: number;
-  deadline: string;
-  rate: number;
-  status: string;
-  feedback: string;
-  progress: number; // Added progress property (0-100%)
-}
+type ValuePiece = Date | null;
+type LocalValue = ValuePiece | [ValuePiece, ValuePiece];
 
-interface Notification {
-  id: number;
-  message: string;
-  timestamp: Date;
-}
+const StudentDashboard: React.FC = () => {
+  const [date, setDate] = useState<LocalValue>(new Date('2023-01-01')); // Fixed initial date
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
-interface Message {
-  studentId: number;
-  content: string;
-}
+  const handleDrawerToggle = () => {
+    setMobileOpen((prev) => !prev);
+  };
 
-const ContainerStyled = styled(Container)({
-  marginTop: '20px',
-});
-
-const Section = styled(Paper)({
-  marginBottom: '40px',
-  padding: '20px',
-});
-
-const Form = styled('form')({
-  display: 'flex',
-  flexDirection: 'column',
-});
-
-const Input = styled(TextField)({
-  marginBottom: '10px',
-});
-
-const ButtonStyled = styled(Button)({
-  alignSelf: 'flex-start',
-});
-
-const ProgressContainer = styled(Box)({
-  display: 'flex',
-  alignItems: 'center',
-  marginBottom: '10px',
-});
-
-const ProgressBar = styled(LinearProgress)({
-  flexGrow: 1,
-  marginRight: '10px',
-});
-
-const StudentDashboard = () => {
-  const [assignments, setAssignments] = useState<Assignment[]>([]);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [newAssignment, setNewAssignment] = useState<Assignment>({
-    id: 0,
-    title: '',
-    description: '',
-    studentId: 1,
-    deadline: '',
-    rate: 0,
-    status: '',
-    feedback: '',
-    progress: 0,
-  });
-  const [file, setFile] = useState<File | null>(null);
-  const [newMessage, setNewMessage] = useState<Message>({ studentId: 1, content: '' });
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(null);
-
-  // Profile management state
-  const [profile, setProfile] = useState({
-    name: '',
-    email: '',
-    password: '',
-    notificationPreferences: {
-      emailNotifications: true,
-      smsNotifications: false,
-    },
-    profilePicture: null as File | null,
-  });
+  const handleCloseDrawer = (event: MouseEvent) => {
+    if (mobileOpen && drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+      setMobileOpen(false);
+    }
+  };
 
   useEffect(() => {
-    fetchAssignments();
-    fetchNotifications();
-    fetchUserProfile(); // Fetch user profile on component mount
-  }, []);
+    document.addEventListener('mousedown', handleCloseDrawer);
+    return () => {
+      document.removeEventListener('mousedown', handleCloseDrawer);
+    };
+  }, [mobileOpen]);
 
-  const fetchAssignments = async () => {
-    const response = await fetch('/api/assignments');
-    const data: Assignment[] = await response.json();
-    setAssignments(data);
-  };
+  const drawer = (
+    <div ref={drawerRef}>
+      <List>
+        <Link href="/student-dashboard" passHref legacyBehavior>
+          <ListItem component="a">
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItem>
+        </Link>
+        <Link href="/assignments" passHref legacyBehavior>
+          <ListItem component="a">
+            <ListItemIcon>
+              <AssignmentIcon />
+            </ListItemIcon>
+            <ListItemText primary="Assignments" />
+          </ListItem>
+        </Link>
+        <Link href="/messages" passHref legacyBehavior>
+          <ListItem component="a">
+            <ListItemIcon>
+              <MessageIcon />
+            </ListItemIcon>
+            <ListItemText primary="Messages" />
+          </ListItem>
+        </Link>
+        <Link href="/notifications" passHref legacyBehavior>
+          <ListItem component="a">
+            <ListItemIcon>
+              <NotificationsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Notifications" />
+          </ListItem>
+        </Link>
+        <Link href="/payments" passHref legacyBehavior>
+          <ListItem component="a">
+            <ListItemIcon>
+              <PaymentIcon />
+            </ListItemIcon>
+            <ListItemText primary="Payments" />
+          </ListItem>
+        </Link>
+        <Link href="/profile" passHref legacyBehavior>
+          <ListItem component="a">
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </ListItem>
+        </Link>
+      </List>
+    </div>
+  );
 
-  const fetchNotifications = async () => {
-    const response = await fetch('/api/notifications');
-    const data: Notification[] = await response.json();
-    setNotifications(data);
-  };
-
-  const fetchUserProfile = async () => {
-    const response = await fetch('/api/user/profile');
-    const data = await response.json();
-    setProfile(data);
-  };
-
-  const handleProfileUpdate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('name', profile.name);
-    formData.append('email', profile.email);
-    formData.append('password', profile.password);
-    if (profile.profilePicture) {
-      formData.append('profilePicture', profile.profilePicture);
-    }
-    formData.append('notificationPreferences', JSON.stringify(profile.notificationPreferences));
-
-    const response = await fetch('/api/user/profile', {
-      method: 'PUT',
-      body: formData,
-    });
-
-    if (response.ok) {
-      alert('Profile updated successfully!');
-      fetchUserProfile(); // Refresh the profile data
-    } else {
-      alert('Failed to update profile.');
-    }
-  };
-
-  const handleAssignmentSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('title', newAssignment.title);
-    formData.append('description', newAssignment.description);
-    formData.append('studentId', String(newAssignment.studentId));
-    formData.append('deadline', newAssignment.deadline);
-    formData.append('rate', String(newAssignment.rate));
-    if (file) {
-      formData.append('file', file);
-    }
-
-    const response = await fetch('/api/assignments/submit', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (response.ok) {
-      setNewAssignment({ id: 0, title: '', description: '', studentId: 1, deadline: '', rate: 0, status: '', feedback: '', progress: 0 });
-      setFile(null);
-      fetchAssignments();
-      fetchNotifications();
-    } else {
-      alert('Failed to submit assignment.');
-    }
-  };
-
-  const handleMessageSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const response = await fetch('/api/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newMessage),
-    });
-
-    if (response.ok) {
-      setNewMessage({ studentId: 1, content: '' });
-    } else {
-      alert('Failed to send message.');
-    }
-  };
-
-  const handleResubmit = (assignment: Assignment) => {
-    setNewAssignment(assignment);
-    setFile(null);
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
-      case 'completed':
-        return 'green';
-      case 'pending':
-        return 'orange';
-      case 'overdue':
-        return 'red';
-      default:
-        return 'gray';
-    }
-  };
-
-  const handleNotificationClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleNotificationClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
-    setProfileAnchorEl(event.currentTarget);
-  };
-
-  const handleProfileClose = () => {
-    setProfileAnchorEl(null);
+  const handleDateChange = (value: LocalValue) => {
+    setDate(value);
   };
 
   return (
-    <ContainerStyled>
-      <AppBar position="static">
+    <Box sx={{ display: "flex", height: "100vh", backgroundColor: "#f5f5f5" }}>
+      {/* AppBar */}
+      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
-          <Typography variant="h6" style={{ flexGrow: 1 }}>
-            Student Dashboard
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            Dashboard
           </Typography>
-          <IconButton color="inherit" onClick={handleNotificationClick}>
-            <Badge badgeContent={notifications.length} color="secondary">
-              <Notifications />
-            </Badge>
+          <Box sx={{ flexGrow: 1 }} />
+          <IconButton color="inherit">
+            <NotificationsIcon />
           </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleNotificationClose}
-          >
-            {notifications.map((notification) => (
-              <MenuItem key={notification.id} onClick={handleNotificationClose}>
-                {notification.message}
-              </MenuItem>
-            ))}
-          </Menu>
-          <IconButton color="inherit" onClick={handleProfileClick}>
-            <Avatar alt={profile.name} src={profile.profilePicture ? URL.createObjectURL(profile.profilePicture) : undefined}>
-              <AccountCircle />
-            </Avatar>
+          <IconButton color="inherit">
+            <AccountCircleIcon />
           </IconButton>
-          <Menu
-            anchorEl={profileAnchorEl}
-            open={Boolean(profileAnchorEl)}
-            onClose={handleProfileClose}
-          >
-            <MenuItem onClick={handleProfileClose}>View Profile</MenuItem>
-            <MenuItem onClick={handleProfileClose}>Logout</MenuItem>
-          </Menu>
         </Toolbar>
       </AppBar>
 
-      <Section elevation={3}>
-        <Typography variant="h5" gutterBottom>
-          Update Profile
+      {/* Drawer */}
+      <Drawer
+        variant="permanent"
+        sx={{
+          display: { xs: "none", sm: "block" },
+          "& .MuiDrawer-paper": { boxSizing: "border-box", width: 240 },
+        }}
+        open
+      >
+        {drawer}
+      </Drawer>
+      <Drawer
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{ keepMounted: true }}
+        sx={{
+          display: { xs: "block", sm: "none" },
+          "& .MuiDrawer-paper": { boxSizing: "border-box", width: 240 },
+        }}
+      >
+        {drawer}
+      </Drawer>
+
+      {/* Main Content */}
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - 240px)` } }}
+      >
+        <Toolbar />
+        <Typography variant="h4" gutterBottom>
+          Assignment Details
         </Typography>
-        <Form onSubmit={handleProfileUpdate}>
-          <Input
-            label="Name"
-            variant="outlined"
-            value={profile.name}
-            onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-            required
-          />
-          <Input
-            label="Email"
-            variant="outlined"
-            value={profile.email}
-            onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-            required
-          />
-          <Input
-            label="New Password"
-            type="password"
-            variant="outlined"
-            value={profile.password}
-            onChange={(e) => setProfile({ ...profile, password: e.target.value })}
-          />
-          <ButtonStyled
-            variant="contained"
-            startIcon={<AttachFile />}
+        <Paper elevation={3} sx={{ p: 3, maxWidth: 600, margin: "0 auto" }}>
+          <Box
+            component="form"
+            sx={{ display: "flex", flexDirection: "column", gap: 2 }}
           >
-            Upload Profile Picture
-            <input
-              type="file"
-              hidden
-              onChange={(e) => setProfile({ ...profile, profilePicture: e.target.files ? e.target.files[0] : null })}
+            <TextField label="Subject" variant="outlined" fullWidth />
+            <TextField label="Pages" variant="outlined" fullWidth />
+            <TextField
+              label="Task Description"
+              variant="outlined"
+              multiline
+              rows={4}
+              fullWidth
             />
-          </ButtonStyled>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={profile.notificationPreferences.emailNotifications}
-                onChange={(e) => setProfile({ ...profile, notificationPreferences: { ...profile.notificationPreferences, emailNotifications: e.target.checked } })}
+            <TextField label="URL Needed" variant="outlined" fullWidth />
+            <label htmlFor="file-upload" style={{ marginTop: '16px' }}>
+              Upload File
+              <input
+                id="file-upload"
+                type="file"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    console.log("File selected:", file.name);
+                    // Handle file upload logic here
+                  }
+                }}
+                style={{ display: 'block', marginTop: '8px' }}
               />
-            }
-            label="Email Notifications"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={profile.notificationPreferences.smsNotifications}
-                onChange={(e) => setProfile({ ...profile, notificationPreferences: { ...profile.notificationPreferences, smsNotifications: e.target.checked } })}
-              />
-            }
-            label="SMS Notifications"
-          />
-          <ButtonStyled type="submit" variant="contained" color="primary">
-            Update Profile
-          </ButtonStyled>
-        </Form>
-      </Section>
-
-      <Section elevation={3}>
-        <Typography variant="h5" gutterBottom>
-          Post Assignment
-        </Typography>
-        <Form onSubmit={handleAssignmentSubmit}>
-          <Input
-            label="Title"
-            variant="outlined"
-            value={newAssignment.title}
-            onChange={(e) => setNewAssignment({ ...newAssignment, title: e.target.value })}
-            required
-          />
-          <Input
-            label="Description"
-            variant="outlined"
-            multiline
-            rows={4}
-            value={newAssignment.description}
-            onChange={(e) => setNewAssignment({ ...newAssignment, description: e.target.value })}
-            required
-          />
-          <Input
-            label="Deadline"
-            type="date"
-            variant="outlined"
-            InputLabelProps={{ shrink: true }}
-            value={newAssignment.deadline}
-            onChange={(e) => setNewAssignment({ ...newAssignment, deadline: e.target.value })}
-            required
-          />
-          <Input
-            label="Rate (in dollars)"
-            type="number"
-            variant="outlined"
-            value={newAssignment.rate}
-            onChange={(e) => setNewAssignment({ ...newAssignment, rate: Number(e.target.value) })}
-            required
-          />
-          <ButtonStyled
-            variant="contained"
-            startIcon={<AttachFile />}
-          >
-            Upload File
-            <input
-              type="file"
-              hidden
-              onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
-            />
-          </ButtonStyled>
-          <ButtonStyled type="submit" variant="contained" color="primary">
-            Submit
-          </ButtonStyled>
-        </Form>
-      </Section>
-
-      <Section elevation={3}>
-        <Typography variant="h5" gutterBottom>
-          Assignment Progress Tracker
-        </Typography>
-        <Grid container spacing={2}>
-          {assignments.map((assignment) => (
-            <Grid item xs={12} sm={6} md={4} key={assignment.id}>
-              <Paper elevation={2}>
-                <Box p={2}>
-                  <Typography variant="h6">{assignment.title}</Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    Deadline: {new Date(assignment.deadline).toLocaleDateString()}
-                  </Typography>
-                  <ProgressContainer>
-                    <ProgressBar
-                      variant="determinate"
-                      value={assignment.progress}
-                      style={{ backgroundColor: getStatusColor(assignment.status) }}
-                    />
-                    <Typography variant="body2" color="textSecondary">
-                      {assignment.progress}%
-                    </Typography>
-                  </ProgressContainer>
-                  <ButtonStyled
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => handleResubmit(assignment)}
-                  >
-                    Resubmit
-                  </ButtonStyled>
-                </Box>
-              </Paper>
-            </Grid>
-          ))}
-        </Grid>
-      </Section>
-
-      <Section elevation={3}>
-        <Typography variant="h5" gutterBottom>
-          Send a Message
-        </Typography>
-        <Form onSubmit={handleMessageSubmit}>
-          <Input
-            label="Message"
-            variant="outlined"
-            multiline
-            rows={4}
-            value={newMessage.content}
-            onChange={(e) => setNewMessage({ ...newMessage, content: e.target.value })}
-            required
-          />
-          <ButtonStyled type="submit" variant="contained" color="primary" startIcon={<Send />}>
-            Send
-          </ButtonStyled>
-        </Form>
-      </Section>
-    </ContainerStyled>
+            </label>
+            <Box sx={{ mt: 2 }}>
+              <Calendar value={date} onChange={(value) => handleDateChange(value)} />
+            </Box>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ alignSelf: "center", mt: 2 }}
+            >
+              Continue
+            </Button>
+          </Box>
+        </Paper>
+        {/* Render Chat Component */}
+        <ChatComponent /> {/* Adding ChatComponent here */}
+      </Box>
+    </Box>
   );
 };
 

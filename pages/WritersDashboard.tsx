@@ -1,108 +1,111 @@
-// pages/WritersDashboard.tsx
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-  Container,
+  AppBar,
+  Toolbar,
   Typography,
+  IconButton,
+  Badge,
+  Avatar,
+  Menu,
+  MenuItem,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
   Paper,
   Grid,
   Box,
   LinearProgress,
   Button,
-  IconButton,
-  AppBar,
-  Toolbar,
-  Badge,
-  Menu,
-  MenuItem,
-  Avatar,
   TextField,
+  Chip,
+  Container,
+  Card,
+  CardContent,
+  CardActions,
+  InputAdornment,
+  Snackbar,
+  Alert,
+  ListItemButton,
+  Collapse, // Add this import
 } from '@mui/material';
+import {
+  Notifications,
+  AccountCircle,
+  Home,
+  Assignment,
+  MonetizationOn,
+  Chat,
+  Settings,
+  Search,
+  Email,
+  Payment,
+  Help,
+  ExitToApp,
+  Brightness4,
+  Brightness7,
+  ExpandLess,
+  ExpandMore, // Add this import
+} from '@mui/icons-material';
 import { styled } from '@mui/system';
-import { Notifications, AccountCircle } from '@mui/icons-material';
+import { teal, blue, green, red, grey } from '@mui/material/colors';
 
-interface Assignment {
-  id: number;
-  title: string;
-  description: string;
-  deadline: string;
-  progress: number; // Progress percentage
-  status: string; // e.g., "completed", "pending"
-}
-
-interface Notification {
-  id: number;
-  message: string;
-  timestamp: Date;
-}
-
-const ContainerStyled = styled(Container)({
-  marginTop: '20px',
+// Custom Styled Components
+const Navbar = styled(AppBar)({
+  backgroundColor: blue[800],
 });
 
-const Section = styled(Paper)({
-  marginBottom: '40px',
+const Sidebar = styled(Drawer)({
+  width: 240,
+  flexShrink: 0,
+  '& .MuiDrawer-paper': {
+    width: 240,
+    backgroundColor: grey[100],
+  },
+});
+
+const HeroSection = styled(Box)({
+  backgroundColor: blue[50],
   padding: '20px',
+  borderRadius: '12px',
+  marginBottom: '20px',
 });
 
-const ProgressContainer = styled(Box)({
-  display: 'flex',
-  alignItems: 'center',
-  marginBottom: '10px',
+const Footer = styled(Box)({
+  backgroundColor: blue[800],
+  color: 'white',
+  padding: '20px',
+  marginTop: '40px',
+  textAlign: 'center',
 });
 
-const ProgressBar = styled(LinearProgress)({
-  flexGrow: 1,
-  marginRight: '10px',
-});
+const StatusChip = ({ status }: { status: string }) => {
+  let chipColor: 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
+
+  switch (status) {
+    case 'completed':
+      chipColor = 'success';
+      break;
+    case 'pending':
+      chipColor = 'warning';
+      break;
+    default:
+      chipColor = 'default';
+      break;
+  }
+
+  return <Chip label={status} color={chipColor} />;
+};
 
 const WritersDashboard = () => {
-  const [assignments, setAssignments] = useState<Assignment[]>([]);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [newAssignment, setNewAssignment] = useState<Assignment>({
-    id: 0,
-    title: '',
-    description: '',
-    deadline: '',
-    progress: 0,
-    status: 'pending',
-  });
-  const [newMessage, setNewMessage] = useState<string>('');
+  const [notifications, setNotifications] = useState([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [profile, setProfile] = useState({
-    name: '',
-    email: '',
-    password: '',
-    notificationPreferences: {
-      emailNotifications: true,
-      smsNotifications: false,
-    },
-    profilePicture: null as File | null,
-  });
-
-  useEffect(() => {
-    fetchAssignments();
-    fetchNotifications();
-    fetchUserProfile(); // Fetch user profile on component mount
-  }, []);
-
-  const fetchAssignments = async () => {
-    const response = await fetch('/api/writers/assignments'); // Adjust the endpoint
-    const data: Assignment[] = await response.json();
-    setAssignments(data);
-  };
-
-  const fetchNotifications = async () => {
-    const response = await fetch('/api/writers/notifications'); // Adjust the endpoint
-    const data: Notification[] = await response.json();
-    setNotifications(data);
-  };
-
-  const fetchUserProfile = async () => {
-    const response = await fetch('/api/user/profile');
-    const data = await response.json();
-    setProfile(data);
-  };
+  const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(null);
+  const [darkMode, setDarkMode] = useState(false);
+  const [openOrders, setOpenOrders] = useState(false); // State for Orders dropdown
+  const [openEarnings, setOpenEarnings] = useState(false); // State for Earnings dropdown
 
   const handleNotificationClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -112,223 +115,221 @@ const WritersDashboard = () => {
     setAnchorEl(null);
   };
 
-  const handleAssignmentSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const response = await fetch('/api/writers/assignments', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newAssignment),
-    });
-
-    if (response.ok) {
-      setNewAssignment({ id: 0, title: '', description: '', deadline: '', progress: 0, status: 'pending' });
-      fetchAssignments();
-      fetchNotifications();
-    } else {
-      alert('Failed to submit assignment.');
-    }
+  const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
+    setProfileAnchorEl(event.currentTarget);
   };
 
-  const handleMessageSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await fetch('/api/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content: newMessage }),
-    });
-    setNewMessage('');
+  const handleProfileClose = () => {
+    setProfileAnchorEl(null);
   };
 
-  const handleProfileUpdate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('name', profile.name);
-    formData.append('email', profile.email);
-    formData.append('password', profile.password);
-    if (profile.profilePicture) {
-      formData.append('profilePicture', profile.profilePicture);
-    }
-    formData.append('notificationPreferences', JSON.stringify(profile.notificationPreferences));
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
-    const response = await fetch('/api/user/profile', {
-      method: 'PUT',
-      body: formData,
-    });
+  const handleOrdersClick = () => {
+    setOpenOrders(!openOrders); // Toggle Orders dropdown
+  };
 
-    if (response.ok) {
-      alert('Profile updated successfully!');
-      fetchUserProfile(); // Refresh the profile data
-    } else {
-      alert('Failed to update profile.');
-    }
+  const handleEarningsClick = () => {
+    setOpenEarnings(!openEarnings); // Toggle Earnings dropdown
   };
 
   return (
-    <ContainerStyled>
-      <AppBar position="static">
+    <Box sx={{ display: 'flex', backgroundColor: darkMode ? grey[900] : grey[50] }}>
+      {/* Navbar */}
+      <Navbar position="fixed">
         <Toolbar>
-          <Typography variant="h6" style={{ flexGrow: 1 }}>
-            Writers Dashboard
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Scholastream
           </Typography>
+          <TextField
+            variant="outlined"
+            size="small"
+            placeholder="Search orders or clients..."
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search />
+                </InputAdornment>
+              ),
+            }}
+            sx={{ mr: 2, backgroundColor: 'white', borderRadius: '4px' }}
+          />
           <IconButton color="inherit" onClick={handleNotificationClick}>
             <Badge badgeContent={notifications.length} color="secondary">
               <Notifications />
             </Badge>
           </IconButton>
-          <IconButton color="inherit">
+          <IconButton color="inherit" onClick={toggleDarkMode}>
+            {darkMode ? <Brightness7 /> : <Brightness4 />}
+          </IconButton>
+          <IconButton color="inherit" onClick={handleProfileClick}>
             <Avatar>
               <AccountCircle />
             </Avatar>
           </IconButton>
         </Toolbar>
-      </AppBar>
+      </Navbar>
 
-      <Section elevation={3}>
-        <Typography variant="h5" gutterBottom>
-          Update Profile
-        </Typography>
-        <form onSubmit={handleProfileUpdate}>
-          <TextField
-            label="Name"
-            variant="outlined"
-            fullWidth
-            value={profile.name}
-            onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-            required
-          />
-          <TextField
-            label="Email"
-            variant="outlined"
-            fullWidth
-            value={profile.email}
-            onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-            required
-          />
-          <TextField
-            label="New Password"
-            type="password"
-            variant="outlined"
-            fullWidth
-            value={profile.password}
-            onChange={(e) => setProfile({ ...profile, password: e.target.value })}
-          />
-          <Button variant="contained" color="primary" type="submit">
-            Update Profile
-          </Button>
-        </form>
-      </Section>
+      {/* Sidebar */}
+      <Sidebar variant="permanent">
+        <Toolbar />
+        <List>
+          <ListItemButton>
+            <ListItemIcon>
+              <Home />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItemButton>
 
-      <Section elevation={3}>
-        <Typography variant="h5" gutterBottom>
-          Submit Assignment
-        </Typography>
-        <form onSubmit={handleAssignmentSubmit}>
-          <TextField
-            label="Title"
-            variant="outlined"
-            fullWidth
-            value={newAssignment.title}
-            onChange={(e) => setNewAssignment({ ...newAssignment, title: e.target.value })}
-            required
-          />
-          <TextField
-            label="Description"
-            variant="outlined"
-            fullWidth
-            multiline
-            rows={4}
-            value={newAssignment.description}
-            onChange={(e) => setNewAssignment({ ...newAssignment, description: e.target.value })}
-            required
-          />
-          <TextField
-            label="Deadline"
-            type="date"
-            variant="outlined"
-            InputLabelProps={{ shrink: true }}
-            fullWidth
-            value={newAssignment.deadline}
-            onChange={(e) => setNewAssignment({ ...newAssignment, deadline: e.target.value })}
-            required
-          />
-          <TextField
-            label="Progress"
-            type="number"
-            variant="outlined"
-            fullWidth
-            value={newAssignment.progress}
-            onChange={(e) => setNewAssignment({ ...newAssignment, progress: Number(e.target.value) })}
-            required
-          />
-          <Button variant="contained" color="primary" type="submit">
-            Submit
-          </Button>
-        </form>
-      </Section>
+          {/* Orders Dropdown */}
+          <ListItemButton onClick={handleOrdersClick}>
+            <ListItemIcon>
+              <Assignment />
+            </ListItemIcon>
+            <ListItemText primary="Orders" />
+            {openOrders ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={openOrders} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Active Orders" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Completed Orders" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Pending Orders" />
+              </ListItemButton>
+            </List>
+          </Collapse>
 
-      <Section elevation={3}>
-        <Typography variant="h5" gutterBottom>
-          Your Assignments
-        </Typography>
-        <Grid container spacing={2}>
-          {assignments.map((assignment) => (
-            <Grid item xs={12} sm={6} md={4} key={assignment.id}>
-              <Paper elevation={2}>
-                <Box p={2}>
-                  <Typography variant="h6">{assignment.title}</Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    Deadline: {new Date(assignment.deadline).toLocaleDateString()}
-                  </Typography>
-                  <ProgressContainer>
-                    <ProgressBar variant="determinate" value={assignment.progress} />
-                    <Typography variant="body2" color="textSecondary">
-                      {assignment.progress}%
-                    </Typography>
-                  </ProgressContainer>
-                </Box>
-              </Paper>
+          {/* Earnings Dropdown */}
+          <ListItemButton onClick={handleEarningsClick}>
+            <ListItemIcon>
+              <MonetizationOn />
+            </ListItemIcon>
+            <ListItemText primary="Earnings" />
+            {openEarnings ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={openEarnings} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Total Earnings" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Withdrawal History" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Withdraw Funds" />
+              </ListItemButton>
+            </List>
+          </Collapse>
+
+          <ListItemButton>
+            <ListItemIcon>
+              <Chat />
+            </ListItemIcon>
+            <ListItemText primary="Messages" />
+          </ListItemButton>
+          <ListItemButton>
+            <ListItemIcon>
+              <Settings />
+            </ListItemIcon>
+            <ListItemText primary="Settings" />
+          </ListItemButton>
+        </List>
+        <Divider />
+        <Box sx={{ p: 2 }}>
+          <Typography variant="h6">Performance Metrics</Typography>
+          <Typography variant="body2">Rating: 4.8/5</Typography>
+          <Typography variant="body2">Completed Orders: 120</Typography>
+          <Typography variant="body2">Earnings this month: $1,200</Typography>
+        </Box>
+      </Sidebar>
+
+      {/* Main Content */}
+      <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: '64px' }}>
+        {/* Hero Section */}
+        <HeroSection>
+          <Typography variant="h4" gutterBottom>
+            Welcome back, John!
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={4}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6">Active Orders</Typography>
+                  <Typography variant="h4">5</Typography>
+                </CardContent>
+              </Card>
             </Grid>
-          ))}
-        </Grid>
-      </Section>
+            <Grid item xs={12} md={4}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6">Pending Payments</Typography>
+                  <Typography variant="h4">$500</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6">Upcoming Deadlines</Typography>
+                  <Typography variant="h4">2</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </HeroSection>
 
-      <Section elevation={3}>
-        <Typography variant="h5" gutterBottom>
-          Notifications
-        </Typography>
-        <ul>
-          {notifications.map((notification) => (
-            <li key={notification.id}>
-              <Typography variant="body2">{notification.message}</Typography>
-              <Typography variant="caption" color="textSecondary">
-                {new Date(notification.timestamp).toLocaleString()}
-              </Typography>
-            </li>
-          ))}
-        </ul>
-      </Section>
+        {/* Active Orders Section */}
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h5" gutterBottom>
+            Active Orders
+          </Typography>
+          <Grid container spacing={2}>
+            {[1, 2, 3].map((order) => (
+              <Grid item xs={12} md={6} key={order}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h6">Order #{order}</Typography>
+                    <Typography variant="body2">Client: John Doe</Typography>
+                    <Typography variant="body2">Deadline: 2023-12-01</Typography>
+                    <StatusChip status="In Progress" />
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small">View Details</Button>
+                    <Button size="small">Submit Work</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
 
-      <Section elevation={3}>
-        <Typography variant="h5" gutterBottom>
-          Send a Message
-        </Typography>
-        <form onSubmit={handleMessageSubmit}>
-          <TextField
-            label="Message"
-            variant="outlined"
-            fullWidth
-            multiline
-            rows={4}
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            required
-          />
-          <Button variant="contained" color="primary" type="submit">
-            Send
-          </Button>
-        </form>
-      </Section>
-    </ContainerStyled>
+        {/* Earnings Overview */}
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h5" gutterBottom>
+            Earnings Overview
+          </Typography>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Total Balance: $1,200</Typography>
+              <Button variant="contained" color="primary">
+                Withdraw Earnings
+              </Button>
+            </CardContent>
+          </Card>
+        </Box>
+      </Box>
+
+      {/* Footer */}
+      <Footer>
+        <Typography variant="body1">© 2025 scholarstream. All rights reserved.</Typography>
+      </Footer>
+    </Box>
   );
 };
 

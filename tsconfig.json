@@ -16,8 +16,10 @@
     "jsx": "preserve",
     "incremental": true,
     "types": ["node", "dotenv"],
+    "baseUrl": ".", // Add baseUrl to support paths
     "paths": {
-      "*": ["./*"]
+      "*": ["./*"],
+      "@/types/*": ["types/*"] // Add a path for the types folder
     },
     "plugins": [
       {
@@ -29,7 +31,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "types/**/*.ts" // Include the types folder
   ],
   "exclude": [
     "node_modules",

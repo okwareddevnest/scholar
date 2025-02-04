@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config(); // Load environment variables from .env file
+console.log('Environment variables loaded:', process.env);
 
 async function testConnection() {
     const connection = mysql.createPool({

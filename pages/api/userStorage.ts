@@ -11,6 +11,7 @@ export const addUser = async (email: string, password: string): Promise<void> =>
   try {
     const connection = await getConnection();
     await connection.execute(query, [email, password]);
+    await connection.end();
   } catch (err) {
     console.error('Error adding user:', err);
     throw err;
@@ -23,6 +24,7 @@ export const findUser = async (email: string, password: string): Promise<User | 
     const connection = await getConnection();
     const [results] = await connection.execute(query, [email, password]);
     const users = results as User[];
+    await connection.end();
     return users[0] || null;
   } catch (err) {
     console.error('Error finding user:', err);
@@ -36,6 +38,7 @@ export const findUserByEmail = async (email: string): Promise<User | null> => {
     const connection = await getConnection();
     const [results] = await connection.execute(query, [email]);
     const users = results as User[];
+    await connection.end();
     return users[0] || null;
   } catch (err) {
     console.error('Error finding user by email:', err);

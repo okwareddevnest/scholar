@@ -7,11 +7,6 @@ let users = [
 ];
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (!req || !res) {
-    res.status(500).json({ error: 'Request or response is not defined' });
-    return;
-  }
-
   if (req.method === 'GET') {
     const result = await query('SELECT * FROM users'); // Adjusted to use the query function
     res.status(200).json(result.rows); // Accessing rows from the result

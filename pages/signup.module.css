@@ -1,41 +1,52 @@
-/* filepath: /c:/Users/Admin/Downloads/Telegram Desktop/sc/scholar/pages/signup.module.css */
+/* signup.module.css */
 .container {
-  min-height: 100vh;
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f5f5f5;
 }
 
 .formContainer {
-  background-color: #fff;
-  padding: 24px;
+  background-color: white;
+  padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  margin-bottom: 2rem;
+  color: #3f51b5; /* Material-UI primary color */
+}
+
+.submitButton {
+  margin-top: 1rem;
+  background-color: #3f51b5; /* Material-UI primary color */
+  color: white;
 }
 
 .googleButton {
-  background-color: #4285F4;
-  color: #FFF;
-  margin-top: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.googleButton span {
-  margin-right: 8px;
-  font-size: 20px;
-  font-weight: bold;
+  margin-top: 1rem;
+  background-color: #4285F4; /* Google Blue */
+  color: white;
 }
 
 .terms {
-  margin-top: 16px;
-  color: #888;
-}
-
-.link {
-  color: #4285F4;
-  text-decoration: underline;
+  margin-top: 1rem;
+  color: #666;
 }
 
 .loginLink {
-  margin-top: 16px;
+  margin-top: 1rem;
+  color: #666;
+}
+
+.link {
+  color: #3f51b5; /* Material-UI primary color */
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
 }

@@ -1,48 +1,152 @@
-/* pages/admin-dashboard.css */
+/* Global styles */
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  background-color: #f4f6f9;
+}
 
-.dashboard-container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .dashboard-header {
-    margin-bottom: 20px;
-  }
-  
-  .form-section,
-  .assignments-section,
-  .notifications-section,
-  .message-section {
-    margin-bottom: 20px;
-  }
-  
-  .assignment-form input,
-  .assignment-form textarea,
-  .message-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-  }
-  
-  button {
-    padding: 10px 15px;
-    background-color: #0070f3;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #005bb5;
-  }
-  
-  .assignments-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .notification-item {
-    background-color: #f0f0f0;
-    padding: 10px;
-    margin: 5px 0;
-  }
+/* Dashboard layout */
+.dashboard {
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background-color: #1E3A8A;
+  color: white;
+  padding: 20px;
+  transition: width 0.3s;
+}
+
+.sidebar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar nav ul li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.sidebar nav ul li:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar nav ul li svg {
+  margin-right: 10px;
+}
+
+/* Main content */
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Menu button */
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Header right section */
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  font-size: 1.5rem;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 35px;
+  height: 35px;
+  background: #ff8c00;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Stats section */
+.stats {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-icon {
+  font-size: 2rem;
+  margin-right: 15px;
+  color: #1E3A8A;
+}
+
+.card-info h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.card-info p {
+  margin: 5px 0 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Sidebar toggle */
+.sidebar-open .sidebar {
+  width: 60px;
+}
+
+.sidebar-open .sidebar .logo,
+.sidebar-open .sidebar nav ul li span {
+  display: none;
+}
+
+.sidebar-open .sidebar nav ul li {
+  justify-content: center;
+}

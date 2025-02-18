@@ -1,47 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, TextField, Typography, Grid, Link } from '@mui/material';
 import { useRouter } from 'next/router';
 import GoogleIcon from '@mui/icons-material/Google';
+import { signIn, useSession } from 'next-auth/react';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null); // Specify the type for error
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (session) {
+      router.push('/dashboard');
+    }
+  }, [session, router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
       });
 
-      if (response.ok) {
-        router.push('/student-dashboard');
-      } else {
-        throw new Error('Login failed');
+      if (result?.error) {
+        setError(result.error);
       }
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('An unknown error occurred');
-      }
+      setError('An unexpected error occurred');
     }
   };
+
+  const handleGoogleSignIn = () => {
+    signIn('google', { callbackUrl: '/dashboard' });
+  };
+
+  if (status === 'loading') {
+    return (
+      <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '100vh' }}>
+        <Typography>Loading...</Typography>
+      </Grid>
+    );
+  }
+
+  if (session) {
+    return null;
+  }
 
   return (
     <Grid 
       container 
       justifyContent="center" 
       alignItems="center" 
-      className="login-container" // Placeholder for styles
+      style={{ minHeight: '100vh' }}
     >
-      <Grid item>
+      <Grid item xs={11} sm={6} md={4} lg={3}>
         <Typography variant="h5" align="center" gutterBottom>
           Sign in to your account
         </Typography>
@@ -88,6 +104,7 @@ const Login: React.FC = () => {
           <Button
             variant="contained"
             fullWidth
+            onClick={handleGoogleSignIn}
             style={{
               marginTop: '16px',
               backgroundColor: '#4285F4',

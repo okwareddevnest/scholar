@@ -68,7 +68,7 @@ export const AuthModals: React.FC<AuthModalsProps> = ({
 
       if (response.ok) {
         onLoginClose();
-        router.push('/student-dashboard');
+        router.push('/dashboard');
         router.refresh();
       } else {
         throw new Error('Login failed');

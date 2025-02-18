@@ -1,158 +1,122 @@
 "use client";
 
-import { useRef, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'components/ui/card';
-import { Badge } from 'components/ui/badge';
-import { PenLine, BookOpen, GraduationCap, Sparkles, Calculator, Globe, BarChart, Code, BookOpenCheck, FileSearch, Microscope, Lightbulb } from 'lucide-react';
-import './services.css'; // Import the CSS file
+import { Box, Container, Typography, Grid, Card, CardContent, CardMedia, Button } from '@mui/material';
+import { ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
 
 const services = [
   {
-    title: "Essay Writing",
-    description: "Custom essays tailored to your specific requirements and academic level.",
-    icon: PenLine,
-    badge: "Popular"
+    title: 'One-on-One Tutoring',
+    description: 'Get personalized attention from expert tutors in your subject area.',
+    image: '/tutoring.jpg',
+    price: '$50/hour',
   },
   {
-    title: "Research Papers",
-    description: "In-depth research papers on various topics with proper citations and references.",
-    icon: BookOpen
+    title: 'Group Study Sessions',
+    description: 'Join collaborative learning groups to share knowledge and insights.',
+    image: '/group-study.jpg',
+    price: '$30/session',
   },
   {
-    title: "Thesis & Dissertations",
-    description: "Comprehensive support for your thesis or dissertation project.",
-    icon: GraduationCap
+    title: 'Exam Preparation',
+    description: 'Comprehensive prep materials and strategies for academic success.',
+    image: '/exam-prep.jpg',
+    price: '$75/session',
   },
   {
-    title: "Editing & Proofreading",
-    description: "Polishing your academic work to ensure clarity, coherence, and correctness.",
-    icon: Sparkles
+    title: 'Writing Assistance',
+    description: 'Expert guidance for essays, research papers, and academic writing.',
+    image: '/writing.jpg',
+    price: '$45/hour',
   },
-  {
-    title: "Math Problem Solving",
-    description: "Step-by-step solutions for complex mathematical problems.",
-    icon: Calculator
-  },
-  {
-    title: "Language Learning Support",
-    description: "Assistance with language assignments and translations.",
-    icon: Globe
-  },
-  {
-    title: "Statistics & Data Analysis",
-    description: "Expert help with statistical analysis and data interpretation.",
-    icon: BarChart
-  },
-  {
-    title: "Programming Assignments",
-    description: "Coding help and explanations for various programming languages.",
-    icon: Code
-  },
-  {
-    title: "Literature Reviews",
-    description: "Comprehensive literature reviews for research projects.",
-    icon: BookOpenCheck
-  },
-  {
-    title: "Case Studies",
-    description: "In-depth analysis and writing of business and academic case studies.",
-    icon: FileSearch
-  },
-  {
-    title: "Lab Reports",
-    description: "Detailed and accurate lab reports for science courses.",
-    icon: Microscope
-  },
-  {
-    title: "Creative Writing",
-    description: "Assistance with creative writing projects and storytelling.",
-    icon: Lightbulb
-  }
 ];
 
 export default function Services() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    if (scrollContainer) {
-      const scrollWidth = scrollContainer.scrollWidth / 2;
-      const animationDuration = scrollWidth / 10; // Adjust speed here (higher number = slower)
-
-      scrollContainer.style.setProperty('--scroll-width', `${scrollWidth}px`);
-      scrollContainer.style.setProperty('--animation-duration', `${animationDuration}s`);
-    }
-  }, []);
-
   return (
-    <section id="services" className="py-20 bg-purple-50 overflow-hidden" aria-labelledby="services-title">
-      <div className="container mx-auto px-4">
-        <h2 id="services-title" className="text-3xl font-bold text-center mb-12 text-purple-800">Our Services</h2>
-        <div className="relative">
-            <div 
-              ref={scrollRef}
-              className="scroll-container flex space-x-4 overflow-hidden"
-            >
-            <div className="flex space-x-4 animate-scroll">
-              {services.map((service, index) => (
-                <Card key={index} className="flex-shrink-0 w-[300px] relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-blue-500"></div>
-                  <CardHeader className="space-y-1">
-                    <div className="flex items-center justify-between">
-                      <service.icon className="h-8 w-8 text-purple-500" aria-hidden="true" />
-                      {service.badge && (
-                        <Badge variant="secondary" className="bg-purple-100 text-purple-800">
-                          {service.badge}
-                        </Badge>
-                      )}
-                    </div>
-                    <CardTitle className="text-xl font-bold text-purple-800">{service.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-sm text-gray-700">{service.description}</CardDescription>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-            <div className="flex space-x-4 animate-scroll" aria-hidden="true">
-              {services.map((service, index) => (
-                <Card key={index} className="flex-shrink-0 w-[300px] relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-blue-500"></div>
-                  <CardHeader className="space-y-1">
-                    <div className="flex items-center justify-between">
-                      <service.icon className="h-8 w-8 text-purple-500" aria-hidden="true" />
-                      {service.badge && (
-                        <Badge variant="secondary" className="bg-purple-100 text-purple-800">
-                          {service.badge}
-                        </Badge>
-                      )}
-                    </div>
-                    <CardTitle className="text-xl font-bold text-purple-800">{service.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-sm text-gray-700">{service.description}</CardDescription>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-          <div className="absolute top-0 left-0 h-full w-1/12 bg-gradient-to-r from-gray-50 to-transparent pointer-events-none" aria-hidden="true"></div>
-          <div className="absolute top-0 right-0 h-full w-1/12 bg-gradient-to-l from-gray-50 to-transparent pointer-events-none" aria-hidden="true"></div>
-        </div>
-      </div>
-      <style jsx>{`
-        @keyframes scroll {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        .animate-scroll {
-          animation: scroll var(--animation-duration) linear infinite;
-        }
-      `}</style>
-    </section>
+    <Box sx={{ py: 8, bgcolor: 'background.paper' }}>
+      <Container maxWidth="lg">
+        <Box sx={{ textAlign: 'center', mb: 8 }}>
+          <Typography
+            variant="h2"
+            sx={{
+              fontSize: { xs: '2rem', md: '2.5rem' },
+              fontWeight: 700,
+              mb: 2,
+            }}
+          >
+            Our Services
+          </Typography>
+          <Typography
+            variant="h5"
+            color="text.secondary"
+            sx={{
+              maxWidth: '800px',
+              mx: 'auto',
+              mb: 6,
+            }}
+          >
+            Discover our range of academic support services designed to help you excel
+          </Typography>
+        </Box>
+
+        <Grid container spacing={4}>
+          {services.map((service, index) => (
+            <Grid item xs={12} sm={6} md={3} key={index}>
+              <Card
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                  },
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={service.image}
+                  alt={service.title}
+                  sx={{ objectFit: 'cover' }}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography
+                    gutterBottom
+                    variant="h6"
+                    component="h3"
+                    sx={{ fontWeight: 600 }}
+                  >
+                    {service.title}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ mb: 2 }}
+                  >
+                    {service.description}
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    color="primary"
+                    sx={{ fontWeight: 600 }}
+                  >
+                    {service.price}
+                  </Typography>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    endIcon={<ArrowForwardIcon />}
+                    sx={{ mt: 2 }}
+                    fullWidth
+                  >
+                    Learn More
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </Box>
   );
 }

@@ -27,6 +27,7 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Divider,
 } from '@mui/material';
 import {
   Assignment as AssignmentIcon,
@@ -52,6 +53,10 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import ActivityFeed from '@/components/ActivityFeed';
+import NotificationCenter from '@/components/NotificationCenter';
+import ProfileCompletionTracker from '@/components/ProfileCompletionTracker';
+import UserPresence from '@/components/UserPresence';
 
 ChartJS.register(
   CategoryScale,
@@ -128,6 +133,7 @@ export default function DashboardPage() {
   });
   const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
   const socket = useSocket();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   useEffect(() => {
     let mounted = true;
@@ -235,11 +241,11 @@ export default function DashboardPage() {
   }, [user?.id, isAuthLoading, dataFetched, socket]);
 
   const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
-    setMenuAnchorEl(event.currentTarget);
+    setAnchorEl(event.currentTarget);
   };
 
   const handleMenuClose = () => {
-    setMenuAnchorEl(null);
+    setAnchorEl(null);
   };
 
   const getStatusColor = (status: string) => {
@@ -316,372 +322,297 @@ export default function DashboardPage() {
   }
 
   return (
-    <Box sx={{ flexGrow: 1, p: 3 }}>
-      {/* Welcome Section */}
-      <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Box>
-          <Typography variant="h4" gutterBottom>
-            Welcome back, {user?.firstName || user?.email?.split('@')[0] || 'Student'}!
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            Here's what's happening with your assignments today.
-          </Typography>
-        </Box>
-        <IconButton onClick={handleMenuClick}>
-          <MoreVertIcon />
-        </IconButton>
-        <Menu
-          anchorEl={menuAnchorEl}
-          open={Boolean(menuAnchorEl)}
-          onClose={handleMenuClose}
-        >
-          <MenuItem onClick={() => router.push('/dashboard/profile')}>View Profile</MenuItem>
-          <MenuItem onClick={() => router.push('/dashboard/settings')}>Settings</MenuItem>
-        </Menu>
-      </Box>
-
-      {/* Stats Overview */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper
-            elevation={3}
-            sx={{
-              p: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              height: 140,
-              position: 'relative',
-              overflow: 'hidden',
-              background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-              color: 'white',
-            }}
-          >
-            <Box
-              sx={{
-                position: 'absolute',
-                top: -15,
-                right: -15,
-                opacity: 0.2,
-                transform: 'rotate(30deg)',
-              }}
-            >
-              <AssignmentIcon sx={{ fontSize: 100 }} />
-            </Box>
-            <Typography variant="h6" gutterBottom>
-              Active Assignments
-            </Typography>
-            <Typography variant="h3">{stats.activeAssignments}</Typography>
-            <Typography variant="body2" sx={{ mt: 1 }}>
-              {stats.activeAssignments > 3 ? 'Busy week ahead!' : 'Looking good!'}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper
-            elevation={3}
-            sx={{
-              p: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              height: 140,
-              position: 'relative',
-              overflow: 'hidden',
-              background: 'linear-gradient(45deg, #4CAF50 30%, #81C784 90%)',
-              color: 'white',
-            }}
-          >
-            <Box
-              sx={{
-                position: 'absolute',
-                top: -15,
-                right: -15,
-                opacity: 0.2,
-                transform: 'rotate(30deg)',
-              }}
-            >
-              <MoneyIcon sx={{ fontSize: 100 }} />
-            </Box>
-            <Typography variant="h6" gutterBottom>
-              Monthly Earnings
-            </Typography>
-            <Typography variant="h3">${stats.totalEarnings}</Typography>
-            <Typography variant="body2" sx={{ mt: 1 }}>
-              +12% from last month
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper
-            elevation={3}
-            sx={{
-              p: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              height: 140,
-              position: 'relative',
-              overflow: 'hidden',
-              background: 'linear-gradient(45deg, #FF9800 30%, #FFB74D 90%)',
-              color: 'white',
-            }}
-          >
-            <Box
-              sx={{
-                position: 'absolute',
-                top: -15,
-                right: -15,
-                opacity: 0.2,
-                transform: 'rotate(30deg)',
-              }}
-            >
-              <TrendingUpIcon sx={{ fontSize: 100 }} />
-            </Box>
-            <Typography variant="h6" gutterBottom>
-              Monthly Progress
-            </Typography>
-            <Typography variant="h3">{stats.monthlyProgress}%</Typography>
-            <Typography variant="body2" sx={{ mt: 1 }}>
-              Keep up the good work!
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper
-            elevation={3}
-            sx={{
-              p: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              height: 140,
-              position: 'relative',
-              overflow: 'hidden',
-              background: 'linear-gradient(45deg, #F44336 30%, #EF5350 90%)',
-              color: 'white',
-            }}
-          >
-            <Box
-              sx={{
-                position: 'absolute',
-                top: -15,
-                right: -15,
-                opacity: 0.2,
-                transform: 'rotate(30deg)',
-              }}
-            >
-              <GradeIcon sx={{ fontSize: 100 }} />
-            </Box>
-            <Typography variant="h6" gutterBottom>
-              Average Rating
-            </Typography>
-            <Typography variant="h3">{stats.averageRating}</Typography>
-            <Typography variant="body2" sx={{ mt: 1 }}>
-              Based on {stats.completedAssignments} reviews
-            </Typography>
-          </Paper>
-        </Grid>
-      </Grid>
-
-      {/* Performance Chart and Recent Activities */}
+    <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Performance Overview
-            </Typography>
-            <Box sx={{ height: 300 }}>
-              <Line
-                data={performanceData}
-                options={{
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: {
-                    legend: {
-                      position: 'top' as const,
-                    },
-                  },
-                }}
-              />
-            </Box>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Recent Activities
-            </Typography>
-            <List>
-              {Array.isArray(recentActivities) && recentActivities.length > 0 ? (
-                recentActivities.map((activity) => (
-                  <ListItem
-                    key={activity.id}
-                    sx={{
-                      mb: 2,
-                      backgroundColor: 'background.default',
-                      borderRadius: 1,
-                    }}
-                  >
-                    <ListItemIcon>
-                      {activity.type === 'assignment' ? (
-                        <AssignmentIcon color="primary" />
-                      ) : activity.type === 'payment' ? (
-                        <MoneyIcon color="success" />
-                      ) : (
-                        <GradeIcon color="warning" />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={activity.title}
-                      secondary={
-                        <Box sx={{ display: 'flex', gap: 1, mt: 0.5 }}>
-                          <Typography variant="caption" color="text.secondary">
-                            {activity.date}
-                          </Typography>
-                          <Chip
-                            label={activity.status}
-                            size="small"
-                            color={getStatusColor(activity.status)}
-                            sx={{ ml: 1 }}
-                          />
-                          {activity.priority && (
-                            <Chip
-                              label={activity.priority}
-                              size="small"
-                              color={getPriorityColor(activity.priority)}
-                            />
-                          )}
-                        </Box>
-                      }
-                    />
-                  </ListItem>
-                ))
-              ) : (
-                <ListItem>
-                  <ListItemText
-                    primary={
-                      <Typography variant="body1" align="center" color="text.secondary">
-                        No recent activities
-                      </Typography>
-                    }
-                  />
-                </ListItem>
-              )}
-            </List>
-          </Paper>
-        </Grid>
-      </Grid>
-
-      {/* Upcoming Deadlines */}
-      <Grid container spacing={3} sx={{ mt: 2 }}>
+        {/* Profile Completion Tracker */}
         <Grid item xs={12}>
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Upcoming Deadlines
-            </Typography>
-            <Grid container spacing={2}>
-              {upcomingDeadlines.map((deadline) => (
-                <Grid item xs={12} md={4} key={deadline.id}>
-                  <Card>
-                    <CardContent>
-                      <Box sx={{ mb: 2 }}>
-                        <Typography variant="h6" gutterBottom>
-                          {deadline.title}
-                        </Typography>
-                        <Typography color="text.secondary" variant="body2">
-                          {deadline.subject}
-                        </Typography>
-                      </Box>
-                      <Box sx={{ mb: 2 }}>
-                        <Typography variant="body2" color="text.secondary">
-                          Due: {deadline.dueDate}
-                        </Typography>
-                        <LinearProgress
-                          variant="determinate"
-                          value={deadline.progress}
-                          sx={{ mt: 1 }}
-                          color={
-                            deadline.progress > 75
-                              ? 'success'
-                              : deadline.progress > 25
-                              ? 'warning'
-                              : 'error'
-                          }
-                        />
-                      </Box>
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        onClick={() => router.push('/dashboard/assignments')}
-                      >
-                        View Details
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
+          <ProfileCompletionTracker />
+        </Grid>
+
+        {/* Main Dashboard Content */}
+        <Grid item xs={12} md={8}>
+          <Grid container spacing={3}>
+            {/* Stats Cards */}
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ height: '100%' }}>
+                <CardContent>
+                  <Typography color="textSecondary" gutterBottom variant="subtitle2">
+                    Active Assignments
+                  </Typography>
+                  <Typography variant="h4" component="div">
+                    {stats.activeAssignments}
+                  </Typography>
+                </CardContent>
+              </Card>
             </Grid>
-          </Paper>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ height: '100%' }}>
+                <CardContent>
+                  <Typography color="textSecondary" gutterBottom variant="subtitle2">
+                    Completed
+                  </Typography>
+                  <Typography variant="h4" component="div">
+                    {stats.completedAssignments}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ height: '100%' }}>
+                <CardContent>
+                  <Typography color="textSecondary" gutterBottom variant="subtitle2">
+                    {user?.role === 'student' ? 'Total Spent' : 'Total Earnings'}
+                  </Typography>
+                  <Typography variant="h4" component="div">
+                    ${user?.role === 'student' ? stats.totalSpent : stats.totalEarnings}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ height: '100%' }}>
+                <CardContent>
+                  <Typography color="textSecondary" gutterBottom variant="subtitle2">
+                    Average Rating
+                  </Typography>
+                  <Typography variant="h4" component="div">
+                    {stats.averageRating.toFixed(1)}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Performance Chart */}
+            <Grid item xs={12}>
+              <Card>
+                <CardContent>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                    <Typography variant="h6" component="div">
+                      Performance Overview
+                    </Typography>
+                    <IconButton
+                      aria-label="more"
+                      aria-controls="performance-menu"
+                      aria-haspopup="true"
+                      onClick={handleMenuClick}
+                    >
+                      <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                      id="performance-menu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleMenuClose}
+                    >
+                      <MenuItem onClick={handleMenuClose}>Last 7 Days</MenuItem>
+                      <MenuItem onClick={handleMenuClose}>Last 30 Days</MenuItem>
+                      <MenuItem onClick={handleMenuClose}>Last 90 Days</MenuItem>
+                    </Menu>
+                  </Box>
+                  <Box sx={{ height: 300 }}>
+                    <Line options={chartOptions} data={performanceData} />
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Activity Feed */}
+            <Grid item xs={12}>
+              <ActivityFeed />
+            </Grid>
+          </Grid>
+        </Grid>
+
+        {/* Sidebar */}
+        <Grid item xs={12} md={4}>
+          <Grid container spacing={3}>
+            {/* Upcoming Deadlines */}
+            <Grid item xs={12}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" component="div" sx={{ mb: 2 }}>
+                    Upcoming Deadlines
+                  </Typography>
+                  {upcomingDeadlines.length > 0 ? (
+                    <List sx={{ p: 0 }}>
+                      {upcomingDeadlines.map((deadline) => (
+                        <Box key={deadline.id}>
+                          <ListItem alignItems="flex-start" sx={{ px: 0 }}>
+                            <ListItemIcon>
+                              <CalendarIcon color="primary" />
+                            </ListItemIcon>
+                            <ListItemText
+                              primary={deadline.title}
+                              secondary={
+                                <>
+                                  <Typography variant="body2" color="text.primary">
+                                    Due: {deadline.dueDate}
+                                  </Typography>
+                                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+                                    <Box sx={{ width: '100%', mr: 1 }}>
+                                      <LinearProgress variant="determinate" value={deadline.progress} />
+                                    </Box>
+                                    <Typography variant="body2" color="text.secondary">
+                                      {deadline.progress}%
+                                    </Typography>
+                                  </Box>
+                                  <Chip
+                                    label={deadline.subject}
+                                    size="small"
+                                    sx={{ mt: 1 }}
+                                    variant="outlined"
+                                  />
+                                </>
+                              }
+                            />
+                          </ListItem>
+                          <Divider component="li" />
+                        </Box>
+                      ))}
+                    </List>
+                  ) : (
+                    <Box sx={{ textAlign: 'center', py: 2 }}>
+                      <Typography color="textSecondary">No upcoming deadlines</Typography>
+                    </Box>
+                  )}
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Online Users */}
+            <Grid item xs={12}>
+              <UserPresence />
+            </Grid>
+
+            {/* Recent Activities */}
+            <Grid item xs={12}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" component="div" sx={{ mb: 2 }}>
+                    Recent Activities
+                  </Typography>
+                  {recentActivities.length > 0 ? (
+                    <List sx={{ p: 0 }}>
+                      {recentActivities.map((activity) => (
+                        <Box key={activity.id}>
+                          <ListItem alignItems="flex-start" sx={{ px: 0 }}>
+                            <ListItemIcon>
+                              {activity.type === 'assignment' ? (
+                                <AssignmentIcon color="primary" />
+                              ) : (
+                                <NotificationsIcon color="secondary" />
+                              )}
+                            </ListItemIcon>
+                            <ListItemText
+                              primary={activity.title}
+                              secondary={
+                                <>
+                                  <Typography variant="body2" color="text.secondary">
+                                    {activity.date}
+                                  </Typography>
+                                  <Box sx={{ display: 'flex', gap: 1, mt: 0.5 }}>
+                                    <Chip
+                                      label={activity.status}
+                                      size="small"
+                                      color={getStatusColor(activity.status) as any}
+                                      variant="outlined"
+                                    />
+                                    {activity.priority && (
+                                      <Chip
+                                        label={activity.priority}
+                                        size="small"
+                                        color={getPriorityColor(activity.priority) as any}
+                                        variant="outlined"
+                                      />
+                                    )}
+                                  </Box>
+                                </>
+                              }
+                            />
+                          </ListItem>
+                          <Divider component="li" />
+                        </Box>
+                      ))}
+                    </List>
+                  ) : (
+                    <Box sx={{ textAlign: 'center', py: 2 }}>
+                      <Typography color="textSecondary">No recent activities</Typography>
+                    </Box>
+                  )}
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
 
       {/* Create Assignment Dialog */}
-      <Dialog
-        open={isCreateDialogOpen}
-        onClose={() => setIsCreateDialogOpen(false)}
-        maxWidth="sm"
-        fullWidth
-      >
+      <Dialog open={isCreateDialogOpen} onClose={() => setIsCreateDialogOpen(false)}>
         <DialogTitle>Create New Assignment</DialogTitle>
         <DialogContent>
-          <Box sx={{ pt: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <TextField
-              fullWidth
-              label="Title"
-              value={newAssignment.title}
-              onChange={(e) => setNewAssignment({ ...newAssignment, title: e.target.value })}
-            />
-            <TextField
-              fullWidth
-              label="Description"
-              multiline
-              rows={4}
-              value={newAssignment.description}
-              onChange={(e) => setNewAssignment({ ...newAssignment, description: e.target.value })}
-            />
-            <TextField
-              fullWidth
-              label="Subject"
+          <TextField
+            autoFocus
+            margin="dense"
+            id="title"
+            label="Assignment Title"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={newAssignment.title}
+            onChange={(e) => setNewAssignment({ ...newAssignment, title: e.target.value })}
+            sx={{ mb: 2, mt: 1 }}
+          />
+          <TextField
+            margin="dense"
+            id="description"
+            label="Description"
+            type="text"
+            fullWidth
+            multiline
+            rows={4}
+            variant="outlined"
+            value={newAssignment.description}
+            onChange={(e) => setNewAssignment({ ...newAssignment, description: e.target.value })}
+            sx={{ mb: 2 }}
+          />
+          <FormControl fullWidth sx={{ mb: 2 }}>
+            <InputLabel id="subject-label">Subject</InputLabel>
+            <Select
+              labelId="subject-label"
+              id="subject"
               value={newAssignment.subject}
+              label="Subject"
               onChange={(e) => setNewAssignment({ ...newAssignment, subject: e.target.value })}
-            />
-            <TextField
-              fullWidth
-              label="Due Date"
-              type="date"
-              InputLabelProps={{ shrink: true }}
-              value={newAssignment.dueDate}
-              onChange={(e) => setNewAssignment({ ...newAssignment, dueDate: e.target.value })}
-            />
-            <FormControl fullWidth>
-              <InputLabel>Priority</InputLabel>
-              <Select
-                value={newAssignment.priority}
-                label="Priority"
-                onChange={(e) => setNewAssignment({ ...newAssignment, priority: e.target.value })}
-              >
-                <MenuItem value="low">Low</MenuItem>
-                <MenuItem value="medium">Medium</MenuItem>
-                <MenuItem value="high">High</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
+            >
+              <MenuItem value="Mathematics">Mathematics</MenuItem>
+              <MenuItem value="Physics">Physics</MenuItem>
+              <MenuItem value="Chemistry">Chemistry</MenuItem>
+              <MenuItem value="Biology">Biology</MenuItem>
+              <MenuItem value="Computer Science">Computer Science</MenuItem>
+              <MenuItem value="Literature">Literature</MenuItem>
+              <MenuItem value="History">History</MenuItem>
+              <MenuItem value="Economics">Economics</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            margin="dense"
+            id="dueDate"
+            label="Due Date"
+            type="date"
+            fullWidth
+            variant="outlined"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            value={newAssignment.dueDate}
+            onChange={(e) => setNewAssignment({ ...newAssignment, dueDate: e.target.value })}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setIsCreateDialogOpen(false)}>Cancel</Button>
-          <Button
-            onClick={handleCreateAssignment}
-            variant="contained"
-            disabled={!newAssignment.title || !newAssignment.dueDate}
-          >
-            Create
+          <Button onClick={handleCreateAssignment} variant="contained" disabled={isSubmitting}>
+            {isSubmitting ? <CircularProgress size={24} /> : 'Create'}
           </Button>
         </DialogActions>
       </Dialog>

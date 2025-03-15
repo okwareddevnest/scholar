@@ -27,7 +27,7 @@ export async function POST(req: Request) {
       type: 'assignment',
       title: `New assignment created: ${data.title}`,
       status: 'pending',
-      relatedId: assignment._id.toString(),
+      relatedUserId: assignment._id.toString(),
       refModel: 'Assignment',
     });
 
@@ -73,7 +73,7 @@ export async function POST(req: Request) {
         id: activity._id.toString(),
         type: activity.type,
         title: activity.title,
-        date: activity.createdAt.toLocaleDateString(),
+        date: activity.timestamp.toLocaleDateString(),
         status: activity.status,
       });
     }
@@ -114,6 +114,12 @@ export async function GET() {
         priority: assignment.priority,
         progress: assignment.progress,
       })));
+
+    // Get recent activities for the user
+    const activities = await Activity.find({ userId: user.id })
+      .sort({ timestamp: -1 })
+      .limit(5)
+      .lean();
 
     return NextResponse.json(assignments);
   } catch (error) {

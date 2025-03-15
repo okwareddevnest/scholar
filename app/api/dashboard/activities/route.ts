@@ -16,7 +16,7 @@ export async function GET() {
 
     // Get recent activities for the user
     const activities = await Activity.find({ userId: user.id })
-      .sort({ createdAt: -1 })
+      .sort({ timestamp: -1 })
       .limit(10)
       .lean();
 
@@ -25,7 +25,7 @@ export async function GET() {
       id: activity._id.toString(),
       type: activity.type || 'assignment',
       title: activity.title || 'Untitled Activity',
-      date: activity.createdAt ? new Date(activity.createdAt).toLocaleDateString() : new Date().toLocaleDateString(),
+      date: activity.timestamp ? new Date(activity.timestamp).toLocaleDateString() : new Date().toLocaleDateString(),
       status: activity.status || 'pending',
       priority: activity.priority,
     })) : [];
